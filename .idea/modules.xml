@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cryptocurrency.iml" filepath="$PROJECT_DIR$/cryptocurrency.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cryptocurrencyCore/cryptocurrencyCore.iml" filepath="$PROJECT_DIR$/cryptocurrencyCore/cryptocurrencyCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cryptocurrencyWeb/cryptocurrencyWeb.iml" filepath="$PROJECT_DIR$/cryptocurrencyWeb/cryptocurrencyWeb.iml" />
+    </modules>
+  </component>
+</project>
