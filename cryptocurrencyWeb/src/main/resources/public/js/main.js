@@ -21,28 +21,31 @@ $(document).ready(function() {
             dataArray.push([new Date(item.date), item[currency].price.usd]);
         });
         graph = new Dygraph(
-            document.getElementById("graphdiv"), dataArray,
+            document.getElementById("chart"), dataArray,
             {labels: ["Date", currency.toUpperCase()]}
         );
     }
-    function updateChart() {
+    function updateChartForCurrency(chartData, currency) {
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080/last',
             async: false,
             success: function (data) {
-              graph.updateOptions({Date: new Date(data.date),ETH: data["eth"].price.usd});
+                var dataArray = [];
+                chartData.forEach(function (item) {
+                    dataArray.push([new Date(item.date), item[currency].price.usd]);
+                });
+                dataArray.push([new Date(data.date), data[currency].price.usd]);
+                graph.updateOptions({'file': dataArray});
             }
         });
     }
     $.when(loadData()).then(function() {
-        setUpChartForCurrency(chartData,"eth");
-        var a = 0;
-       // while(a++ < 100000) {
-        //    updateChart();
-       // }
-       // setInterval(function(){
-      //      updateChart();
-      //  }, 1000);
+        setUpChartForCurrency(chartData,$("#currency").val());
+        setInterval(function(){ updateChartForCurrency(chartData, $("#currency").val()); }, 30000);
+
+        $("#currency").on("change", function() {
+            updateChartForCurrency(chartData,$(this).val());
+        });
     });
 });
