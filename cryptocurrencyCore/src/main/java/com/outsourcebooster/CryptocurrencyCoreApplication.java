@@ -20,14 +20,13 @@ public class CryptocurrencyCoreApplication {
 		Runtime.getRuntime().exec("mongod");
 		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(CryptocurrencyCoreApplication.class);
 		ValueRepository valueRepository = configurableApplicationContext.getBeanFactory().getBean(ValueRepository.class);
-			while (true) {
-				RestTemplate restTemplate = new RestTemplate();
-				Value currencyValue = restTemplate.getForObject(API_URL + ALL, Value.class);
-				valueRepository.save(currencyValue);
-				try {
-					Thread.currentThread().sleep(SLEEP_SECONDS);
-				} catch (InterruptedException e) {}
-
-			}
+		while (true) {
+			RestTemplate restTemplate = new RestTemplate();
+			Value currencyValue = restTemplate.getForObject(API_URL + ALL, Value.class);
+			valueRepository.save(currencyValue);
+			try {
+				Thread.currentThread().sleep(SLEEP_SECONDS);
+			} catch (InterruptedException e) {}
+		}
 	}
 }

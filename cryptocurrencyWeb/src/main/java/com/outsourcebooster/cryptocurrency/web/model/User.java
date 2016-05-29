@@ -9,6 +9,7 @@ public class User {
     private String username;
     private String password;
     private Collection<Role> roles;
+    private Wallet wallet;
 
     public User() {}
 
@@ -40,5 +41,13 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
     }
 }

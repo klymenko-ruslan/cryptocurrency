@@ -6,6 +6,17 @@ $(document).ready(function() {
     var chartData;
     var graph;
 
+    function loadUserData() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8081/api/get',
+            async: false,
+            success: function (user) {
+                generateWalletTable(user)
+            }
+        });
+    }
+
     function loadData(period)  {
         $.ajax({
             type: 'GET',
@@ -15,7 +26,6 @@ $(document).ready(function() {
                 chartData = data;
             }
         });
-
     }
 
     function setUpChart(chartData, currency) {
@@ -65,11 +75,28 @@ $(document).ready(function() {
         $("#periodDailyLowLabel").html($("#period").val() + " change");
     }
 
+    function generateWalletTable(user) {
+        var walletTable = "<table border='1'>";
+        user.wallet.accounts.forEach(function (item) {
+            walletTable += "<tr>";
+            walletTable += "<td>" + item.currency + "</td>";
+            walletTable += "<td>" + item.amount + "</td>";
+            walletTable += "</tr>";
+        });
+        walletTable += "</table>";
+        $("#wallet").html(walletTable);
+    }
+
 
     $.when(loadData("all")).then(function() {
 
         setUpChart(chartData,$("#currency").val());
-        setInterval(function(){ updateChart(chartData, $("#currency").val()); }, 1000);
+        loadUserData();
+
+        setInterval(function(){
+            updateChart(chartData, $("#currency").val());
+            loadUserData();
+        }, 1000);
 
         $("#currency").on("change", function() {
             updateChart(chartData,$(this).val());
@@ -78,6 +105,5 @@ $(document).ready(function() {
         $("#period").on("change", function() {
             loadData($(this).val());
         });
-
     });
 });
