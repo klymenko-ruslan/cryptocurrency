@@ -6,9 +6,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="js/main.js"></script>
-    <script type="text/javascript">
-
-    </script>
 </head>
 <body>
 <div id="chart"></div>
@@ -16,5 +13,31 @@
     <option name="eth">eth</option>
     <option name="btc">btc</option>
 </select>
+<select id="period">
+    <option name="minute">minute</option>
+    <option name="hour">hour</option>
+    <option name="day">day</option>
+    <option name="week">week</option>
+    <option name="month">month</option>
+    <option name="year">year</option>
+    <option name="all" selected="selected">all</option>
+</select>
+<table border="1">
+    <tr>
+        <th>Last price</th>
+        <th id="periodDailyChangeLabel"></th>
+        <th id="periodDailyHighLabel"></th>
+        <th id="periodDailyLowLabel"></th>
+    </tr>
+    <tr>
+        <td id="periodLastPrice"></td>
+        <td id="periodDailyChange"></td>
+        <td id="periodDailyHigh"></td>
+        <td id="periodDailyLow"></td>
+    </tr>
+</table>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

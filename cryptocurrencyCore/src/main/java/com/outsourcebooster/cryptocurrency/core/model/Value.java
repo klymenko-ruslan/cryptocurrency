@@ -1,4 +1,4 @@
-package com.outsourcebooster.cryptocurrency.core.model.currency;
+package com.outsourcebooster.cryptocurrency.core.model;
 
 import org.springframework.data.annotation.Id;
 

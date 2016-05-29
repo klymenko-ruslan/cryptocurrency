@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function createUser() {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:8081/api/create',
+                    dataType: 'json',
+                    contentType: "application/json",
+                    data: JSON.stringify({username: $("#username").val(), password: $("#password").val()}),
+                    success: function (data) {
+                        $("#createdUserInfo").html(data.message);
+                    },
+                    error: function (err) {
+                        $("#createdUserInfo").html("The error occurred. Try to create user later or contact us.");
+                    }
+                });
+            }
+            $("#createUser").on("click", function() {
+                createUser();
+            });
+        });
+    </script>
+    <title>Spring Security Example </title>
+</head>
+<body>
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+<form th:action="@{/login}" method="post">
+    <div><label> User Name : <input type="text" name="username"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><input type="submit" value="Sign In"/></div>
+</form>
+
+<div>
+Create user:
+<div><label> User Name : <input type="text" id="username"/> </label></div>
+<div><label> Password: <input type="password" id="password"/> </label></div>
+<button id="createUser">Create</button>
+<div id="createdUserInfo"></div>
+</div>
+</body>
+</html>
