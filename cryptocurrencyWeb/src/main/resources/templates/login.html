@@ -3,13 +3,15 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/redmond/jquery-ui.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script>
         $(document).ready(function() {
             function createUser() {
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:8081/api/create',
+                    url: 'http://localhost:8081/user/create',
                     dataType: 'json',
                     contentType: "application/json",
                     data: JSON.stringify({username: $("#username").val(), password: $("#password").val()}),
@@ -21,32 +23,49 @@
                     }
                 });
             }
+            $("#createUserPopup").on("click", function() {
+                $(function() {
+                    $( "#createUserForm" ).dialog();
+                });
+            });
             $("#createUser").on("click", function() {
                 createUser();
             });
+            $(function() {
+                $( "#loginForm" ).dialog();
+            });
         });
     </script>
-    <title>Spring Security Example </title>
+    <title>Cryptocurrency exchange </title>
 </head>
-<body>
-<div th:if="${param.error}">
-    Invalid username and password.
+<body style="background-color:#ecf0f5">
+<div id="loginForm">
+    <div>
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <div title="Authorization:">
+            <form th:action="@{/login}" method="post">
+                <div><label> User Name :<input type="text" name="username"/> </label></div>
+                <div><label> Password :<input type="password" name="password"/> </label></div>
+                <div align="center"><input type="submit" value="Sign In"/></div>
+            </form>
+            <br />
+            <div align="center">
+                <button id="createUserPopup">Create new user</button>
+            </div>
+        </div>
+        <div id="createUserForm" style="display:none" title="Create new user:">
+            <div><label> User Name : <input type="text" id="username"/> </label></div>
+            <div><label> Password: <input type="password" id="password"/> </label></div>
+            <button id="createUser">Create</button>
+            <div id="createdUserInfo"></div>
+        </div>
+    </div>
 </div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
 
-<div>
-Create user:
-<div><label> User Name : <input type="text" id="username"/> </label></div>
-<div><label> Password: <input type="password" id="password"/> </label></div>
-<button id="createUser">Create</button>
-<div id="createdUserInfo"></div>
-</div>
 </body>
 </html>

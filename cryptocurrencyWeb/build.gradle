@@ -23,6 +23,7 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {url "http://dl.bintray.com/ethereum/maven"}
 }
 
 configurations {
@@ -35,5 +36,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.ethereum:ethereumj-core:1.1.0-RELEASE")
+    compile("org.bitcoinj:bitcoinj-core:0.14.2")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

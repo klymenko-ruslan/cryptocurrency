@@ -22,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @ResponseBody
-    @RequestMapping(value = "/api/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
     public HttpEntity<DTOTemplate<User>> createUser(@RequestBody User user) {
         try {
             return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully created.",userService.createUser(user)));
@@ -32,7 +32,37 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/api/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/updateProfile", method = RequestMethod.POST)
+    public HttpEntity<DTOTemplate<User>> updateUserProfile(@RequestBody User user) {
+        try {
+            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully updated.",userService.updateUserProfile(user)));
+        } catch(UnsupportedOperationException e) {
+            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/updateNotifications", method = RequestMethod.POST)
+    public HttpEntity<DTOTemplate<User>> updateUserNotifications(@RequestBody User user) {
+        try {
+            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully updated.",userService.updateUserNotificationRules(user)));
+        } catch(UnsupportedOperationException e) {
+            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/updateNotificationRules", method = RequestMethod.POST)
+    public HttpEntity<DTOTemplate<User>> updateUserNotificationRules(@RequestBody User user) {
+        try {
+            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully updated.",userService.updateUserNotificationRules(user)));
+        } catch(UnsupportedOperationException e) {
+            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/get", method = RequestMethod.GET)
     public HttpEntity<User> getUser(HttpSession session) {
         SecurityContextImpl securityContext = (SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = ((UsernamePasswordAuthenticationToken)securityContext.getAuthentication()).getName();

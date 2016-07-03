@@ -8,6 +8,12 @@ import java.util.List;
 public class Wallet {
     private List<Account> accounts;
 
+    public Wallet() {}
+
+    public Wallet(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     public List<Account> getAccounts() {
         return accounts;
     }
