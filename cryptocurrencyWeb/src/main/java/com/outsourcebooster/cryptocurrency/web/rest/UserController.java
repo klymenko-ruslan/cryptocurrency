@@ -42,16 +42,6 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/user/updateNotifications", method = RequestMethod.POST)
-    public HttpEntity<DTOTemplate<User>> updateUserNotifications(@RequestBody User user) {
-        try {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully updated.",userService.updateUserNotificationRules(user)));
-        } catch(UnsupportedOperationException e) {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
-        }
-    }
-
-    @ResponseBody
     @RequestMapping(value = "/user/updateNotificationRules", method = RequestMethod.POST)
     public HttpEntity<DTOTemplate<User>> updateUserNotificationRules(@RequestBody User user) {
         try {

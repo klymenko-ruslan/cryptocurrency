@@ -52,29 +52,6 @@ public class UserService {
         return savedUser;
     }
 
-    public User updateUserNotifications(User updatedUser) {
-        User savedUser = userRepository.findByUsername(updatedUser.getUsername());
-        if(userRepository.findByUsername(updatedUser.getUsername()) == null)
-            throw new UnsupportedOperationException("There's no updatedUser with such username!");
-        for(Notification savedNotification : savedUser.getNotifications()){
-            for(Notification updatedNotification : updatedUser.getNotifications()){
-                if(updatedNotification.getCurrency().equals(savedNotification.getCurrency())) {
-                    if(Double.parseDouble(updatedNotification.getValue()) < Double.parseDouble(savedNotification.getValue())
-                            && Double.parseDouble(savedNotification.getValue()) > Double.parseDouble(savedUser.getNotificationRules().iterator().next().getPrice())) {
-                        savedNotification.setIsPurchasable(true);
-                    } else if(Double.parseDouble(updatedNotification.getValue()) < Double.parseDouble(savedNotification.getValue())
-                            && !savedNotification.isPurchasable()) {
-
-                    }
-                }
-                savedNotification.setDate(new Date());
-            }
-        }
-        savedUser.setNotificationRules(updatedUser.getNotificationRules());
-        userRepository.save(savedUser);
-        return savedUser;
-    }
-
     public User updateUserNotificationRules(User updatedUser) {
         User savedUser = userRepository.findByUsername(updatedUser.getUsername());
         if(userRepository.findByUsername(updatedUser.getUsername()) == null)
@@ -90,8 +67,8 @@ public class UserService {
             throw new UnsupportedOperationException("There's no updatedUser with such username!");
 
         String userImageFolder = "C:/Users/rklim/img/user/";
-        Paths.get(userImageFolder, savedUser.getImageFileName()).toFile().delete();
-
+        if(savedUser.getImageFileName() != null)
+            Paths.get(userImageFolder, savedUser.getImageFileName()).toFile().delete();
         String newImageFileName = username + System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         Files.copy(file.getInputStream(), Paths.get(userImageFolder, newImageFileName));
 

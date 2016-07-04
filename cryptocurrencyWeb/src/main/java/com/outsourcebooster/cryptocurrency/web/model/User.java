@@ -23,7 +23,6 @@ public class User {
     private boolean enableNotification;
     private String imageFileName;
     private Collection<NotificationRule> notificationRules;
-    private Collection<Notification> notifications;
     private Collection<Role> roles;
     private Wallet wallet;
     @Override
@@ -143,14 +142,6 @@ public class User {
 
     public void setUserCurrency(UserCurrency userCurrency) {
         this.userCurrency = userCurrency;
-    }
-
-    public Collection<Notification> getNotifications() {
-        return notifications;
-    }
-
-    public void setNotifications(Collection<Notification> notifications) {
-        this.notifications = notifications;
     }
 
     public String getImageFileName() {

@@ -3,6 +3,16 @@
  */
 $(document).ready(function() {
 
+    function playSound() {
+        return $(
+            '<audio autoplay="autoplay" style="display:none;">'
+            + '<source src="' + arguments[0] + '.mp3" />'
+            + '<source src="' + arguments[0] + '.ogg" />'
+            + '<embed src="' + arguments[0] + '.mp3" hidden="true" autostart="true" loop="false" class="playSound" />'
+            + '</audio>'
+        ).appendTo('body');
+    }
+
     var chartData;
     var graph;
 
@@ -40,6 +50,33 @@ $(document).ready(function() {
         updateTable(chartData, currency);
     }
 
+    function getNotificationTemplate(message, color, numberOfNotification) {
+        var notificationId = "notification"+numberOfNotification;
+        //
+        return  "<ul class='menu' id='"+notificationId+"' >" +
+                    "<li>" +
+                        "<a href='#' >" +
+                            "<i class='fa fa-shopping-cart text-"+color+"'></i> " + message +
+                            "<i class='fa fa-times text-red' aria-hidden='true' onclick=\"if(confirm('Do you want to remove notification?')){$('#"+notificationId+"').remove();$('#numberOfNotifications').text(parseInt($('#numberOfNotifications').text()) - 1);}\"></i>" +
+                        "</a>" +
+                    "</li>" +
+                "</ul>";
+    }
+
+    function getBuyMessage(currency) {
+        return getFormattedDate() + ": Time to buy " + currency;
+    }
+
+    function getSellMessage(currency) {
+        return getFormattedDate() + ": Time to sell " + currency;
+    }
+
+    function getFormattedDate() {
+        var date = new Date();
+        return formattedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    }
+
+    var buyNotified = {};
     function updateChart(chartData, currency) {
         $.ajax({
             type: 'GET',
@@ -50,28 +87,26 @@ $(document).ready(function() {
                 notificationRules.forEach(function (item) {
                     var currencyName = item.currency.$name;
                     notifications.push([{'currency' : currencyName}, {'value':parseFloat(data[currencyName].price[userCurrency])}]);
-                   // if(parseFloat(data[item.currency.$name].price[userCurrency]) <
-                  //      parseFloat(document.getElementById(item.currency.$name+"NotificationRule").value)) {
-
-                 //   }
-                });
-             /*   $.ajax({
-                    type: 'POST',
-                    url: 'http://localhost:8081/user/updateNotifications',
-                    dataType: 'json',
-                    contentType: "application/json",
-                    data: JSON.stringify({username: username,
-                        notifications: notifications}),
-                    success: function (user) {
-                        updateNotificationRules(user.entity);
-                        alert("Notification rules were successfully updated.");
-                        $("#notificationRules").dialog("close");
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status);
-                        alert(thrownError);
+                    if(parseFloat(data[item.currency.$name].price[userCurrency]) <
+                        parseFloat(document.getElementById(item.currency.$name+"NotificationRule").value)) {
+                        if(!buyNotified[item.currency.$name]) {
+                            buyNotified[item.currency.$name] = true;
+                            var numberOfNotification = parseInt($("#numberOfNotifications").text()) + 1;
+                            $("#numberOfNotifications").text(numberOfNotification);
+                            $("#notificationList").append(getNotificationTemplate(getBuyMessage(item.currency.$name),"green", numberOfNotification));
+                            playSound('sounds/buy');
+                        }
+                    } else {
+                        if(typeof buyNotified[item.currency.$name] === 'undefined'
+                               || buyNotified[item.currency.$name]) {
+                            buyNotified[item.currency.$name] = false;
+                            var numberOfNotification = parseInt($("#numberOfNotifications").text()) + 1;
+                            $("#numberOfNotifications").text(numberOfNotification);
+                            $("#notificationList").append(getNotificationTemplate(getSellMessage(item.currency.$name),"red",numberOfNotification));
+                            playSound('sounds/sell');
+                        }
                     }
-                });*/
+                });
                 var dataArray = [];
                 chartData.push(data);
                 chartData.forEach(function (item) {
@@ -197,6 +232,8 @@ $(document).ready(function() {
                 $("#lastNamePlaceholder").text($("#lastName").val());
                 $("#professionPlaceholder").text($("#profession").val());
                 userCurrency = $("#userCurrency").val();
+                $(".userCurrency").text(userCurrency);
+                buyNotified = {};
                 alert("User was successfully updated.");
                 $("#profile").dialog("close");
             },
