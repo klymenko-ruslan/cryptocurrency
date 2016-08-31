@@ -2,10 +2,8 @@ package com.outsourcebooster.cryptocurrency.web.model;
 
 import org.springframework.data.annotation.Id;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by rklimemnko on 29.05.2016.
@@ -19,6 +17,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String profession;
+    private String email;
     private UserCurrency userCurrency;
     private boolean enableNotification;
     private String imageFileName;
@@ -150,5 +149,13 @@ public class User {
 
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

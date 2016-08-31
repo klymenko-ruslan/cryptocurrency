@@ -36,36 +36,38 @@
             });
         });
     </script>
+
     <title>Cryptocurrency exchange </title>
 </head>
 <body style="background-color:#ecf0f5">
-<div id="loginForm">
-    <div>
-        <div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <div title="Authorization:">
-            <form th:action="@{/login}" method="post">
-                <div><label> User Name :<input type="text" name="username"/> </label></div>
-                <div><label> Password :<input type="password" name="password"/> </label></div>
-                <div align="center"><input type="submit" value="Sign In"/></div>
-            </form>
-            <br />
-            <div align="center">
-                <button id="createUserPopup">Create new user</button>
+
+    <div id="loginForm">
+        <div>
+            <div th:if="${param.error}">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}">
+                You have been logged out.
+            </div>
+            <div title="Authorization:">
+                <form th:action="@{/login}" method="post">
+                    <div><label> User Name :<input type="text" name="username"/> </label></div>
+                    <div><label> Password :<input type="password" name="password"/> </label></div>
+                    <div align="center"><input type="submit" value="Sign In"/></div>
+                </form>
+                <br />
+                <div align="center">
+                    <button id="createUserPopup">Create new user</button>
+                </div>
+            </div>
+            <div id="createUserForm" style="display:none" title="Create new user:">
+                <div><label> User Name : <input type="text" id="username"/> </label></div>
+                <div><label> Password: <input type="password" id="password"/> </label></div>
+                <button id="createUser">Create</button>
+                <div id="createdUserInfo"></div>
             </div>
         </div>
-        <div id="createUserForm" style="display:none" title="Create new user:">
-            <div><label> User Name : <input type="text" id="username"/> </label></div>
-            <div><label> Password: <input type="password" id="password"/> </label></div>
-            <button id="createUser">Create</button>
-            <div id="createdUserInfo"></div>
-        </div>
     </div>
-</div>
 
 </body>
 </html>

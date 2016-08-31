@@ -16,6 +16,21 @@ $(document).ready(function() {
     var chartData;
     var graph;
 
+    function loadCurrencies() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8083/value/currencies',
+            async: false,
+            success: function (currencies) {
+                currencies.forEach(function (currency) {
+                    $("#currency").append("<option name='"+currency+"'>"+currency+"</option>");
+                });
+            }
+        });
+    }
+
+    loadCurrencies();
+
     function loadUserData() {
         $.ajax({
             type: 'GET',
@@ -30,7 +45,7 @@ $(document).ready(function() {
     function loadChartData(period)  {
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/'+period,
+            url: 'http://localhost:8083/value/'+period,
             async: false,
             success: function (data) {
                 chartData = data;
@@ -80,33 +95,55 @@ $(document).ready(function() {
     function updateChart(chartData, currency) {
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/last',
+            url: 'http://localhost:8083/value/last',
             async: false,
             success: function (data) {
                 var notifications = [];
-                notificationRules.forEach(function (item) {
-                    var currencyName = item.currency.$name;
-                    notifications.push([{'currency' : currencyName}, {'value':parseFloat(data[currencyName].price[userCurrency])}]);
-                    if(parseFloat(data[item.currency.$name].price[userCurrency]) <
-                        parseFloat(document.getElementById(item.currency.$name+"NotificationRule").value)) {
-                        if(!buyNotified[item.currency.$name]) {
-                            buyNotified[item.currency.$name] = true;
-                            var numberOfNotification = parseInt($("#numberOfNotifications").text()) + 1;
-                            $("#numberOfNotifications").text(numberOfNotification);
-                            $("#notificationList").append(getNotificationTemplate(getBuyMessage(item.currency.$name),"green", numberOfNotification));
-                            playSound('sounds/buy');
+                if(notificationRules) {
+                    notificationRules.forEach(function (item) {
+                        var currencyName = item.currency.$name;
+                        notifications.push([{'currency': currencyName}, {'value': parseFloat(data[currencyName].price[userCurrency])}]);
+                        if (parseFloat(data[item.currency.$name].price[userCurrency]) <
+                            parseFloat(document.getElementById(item.currency.$name + "NotificationRule").value)) {
+                            if (!buyNotified[item.currency.$name]) {
+                                buyNotified[item.currency.$name] = true;
+                                var numberOfNotification = parseInt($("#numberOfNotifications").text()) + 1;
+                                $("#numberOfNotifications").text(numberOfNotification);
+                                var message = getNotificationTemplate(getBuyMessage(item.currency.$name), "green", numberOfNotification);
+                                $("#notificationList").append(message);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'http://localhost:8081/user/notify',
+                                    async: false,
+                                    data: "message=" + getBuyMessage(item.currency.$name),
+                                    success: function (data) {
+
+                                    }
+                                });
+                                playSound('sounds/buy');
+                            }
+                        } else {
+                            if (typeof buyNotified[item.currency.$name] === 'undefined'
+                                || buyNotified[item.currency.$name]) {
+                                buyNotified[item.currency.$name] = false;
+                                var numberOfNotification = parseInt($("#numberOfNotifications").text()) + 1;
+                                $("#numberOfNotifications").text(numberOfNotification);
+                                var message = getNotificationTemplate(getSellMessage(item.currency.$name), "red", numberOfNotification);
+                                $("#notificationList").append(message);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'http://localhost:8081/user/notify',
+                                    async: false,
+                                    data: "message=" + getSellMessage(item.currency.$name),
+                                    success: function (data) {
+
+                                    }
+                                });
+                                playSound('sounds/sell');
+                            }
                         }
-                    } else {
-                        if(typeof buyNotified[item.currency.$name] === 'undefined'
-                               || buyNotified[item.currency.$name]) {
-                            buyNotified[item.currency.$name] = false;
-                            var numberOfNotification = parseInt($("#numberOfNotifications").text()) + 1;
-                            $("#numberOfNotifications").text(numberOfNotification);
-                            $("#notificationList").append(getNotificationTemplate(getSellMessage(item.currency.$name),"red",numberOfNotification));
-                            playSound('sounds/sell');
-                        }
-                    }
-                });
+                    });
+                }
                 var dataArray = [];
                 chartData.push(data);
                 chartData.forEach(function (item) {
@@ -224,6 +261,7 @@ $(document).ready(function() {
                 firstName: $("#firstName").val(),
                 lastName: $("#lastName").val(),
                 profession: $("#profession").val(),
+                email: $("#email").val(),
                 userCurrency: $("#userCurrency").val(),
                 enableNotification: $("#enableNotification").prop('checked')}),
             success: function (data) {

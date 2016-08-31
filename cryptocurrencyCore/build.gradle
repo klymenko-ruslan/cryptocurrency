@@ -29,6 +29,9 @@ configurations {
     providedRuntime
 }
 
+bootRun {
+    main = 'com.outsourcebooster.CryptocurrencyCoreApplication'
+}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')

@@ -30,13 +30,19 @@ configurations {
     providedRuntime
 }
 
+bootRun {
+    main = 'com.outsourcebooster.cryptocurrency.web.CryptocurrencyWebApplication'
+}
+
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-tomcat")
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    compile("org.ethereum:ethereumj-core:1.1.0-RELEASE")
-    compile("org.bitcoinj:bitcoinj-core:0.14.2")
+    //compile("org.ethereum:ethereumj-core:1.1.0-RELEASE")
+  //  compile("org.bitcoinj:bitcoinj-core:0.14.2")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+
 }

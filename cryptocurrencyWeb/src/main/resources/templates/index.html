@@ -8,19 +8,19 @@
 
   <title>Cryptocurrency exchange</title>
 
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css" />
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css" />
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/redmond/jquery-ui.css" />
+  <link rel="stylesheet" href="styles/skins/_all-skins.min.css" />
+  <link rel="stylesheet" href="styles/AdminLTE.min.css" />
+  <link rel="stylesheet" href="styles/bootstrap.min.css" />
+  <link rel="stylesheet" href="styles/main.css" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-  <script src="bootstrap/js/bootstrap.min.js"></script>
-  <script src="dist/js/app.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/app.min.js"></script>
   <script src="js/main.js"></script>
 
   <!--[if lt IE 9]>
@@ -33,7 +33,7 @@
 
   <header class="main-header">
     <a href="/" class="logo">
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>C</b>ce</span>
       <span class="logo-lg"><b>Cryptocurrency</b></span>
     </a>
     <nav class="navbar navbar-static-top">
@@ -134,8 +134,6 @@
                   <div class="col-lg-4">
                     <div class="select">
                       <select id="currency" class="currency__name">
-                        <option name="eth">eth</option>
-                        <option name="btc">btc</option>
                       </select>
                       <select id="period" class="currency__period">
                         <option name="minute">minute</option>
@@ -198,6 +196,10 @@
       <tr>
         <td>Profession:</td>
         <td><input id="profession" th:value="${user.profession}" /></td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><input id="email" th:value="${user.email}" /></td>
       </tr>
       <tr>
         <td>Currency:</td>

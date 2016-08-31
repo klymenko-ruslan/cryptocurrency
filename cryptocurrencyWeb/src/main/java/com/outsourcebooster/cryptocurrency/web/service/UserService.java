@@ -1,8 +1,9 @@
 package com.outsourcebooster.cryptocurrency.web.service;
 
+import com.outsourcebooster.cryptocurrency.web.config.MvcConfig;
 import com.outsourcebooster.cryptocurrency.web.exception.NotUniqueEntityException;
-import com.outsourcebooster.cryptocurrency.web.model.*;
 import com.outsourcebooster.cryptocurrency.web.repository.UserRepository;
+import com.outsourcebooster.cryptocurrency.web.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by rklimemnko on 29.05.2016.
@@ -66,11 +66,10 @@ public class UserService {
         if(savedUser == null)
             throw new UnsupportedOperationException("There's no updatedUser with such username!");
 
-        String userImageFolder = "C:/Users/rklim/img/user/";
         if(savedUser.getImageFileName() != null)
-            Paths.get(userImageFolder, savedUser.getImageFileName()).toFile().delete();
+            Paths.get(MvcConfig.PATH_TO_USER_IMAGES, savedUser.getImageFileName()).toFile().delete();
         String newImageFileName = username + System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        Files.copy(file.getInputStream(), Paths.get(userImageFolder, newImageFileName));
+        Files.copy(file.getInputStream(), Paths.get(MvcConfig.PATH_TO_USER_IMAGES, newImageFileName));
 
         savedUser.setImageFileName(newImageFileName);
         userRepository.save(savedUser);

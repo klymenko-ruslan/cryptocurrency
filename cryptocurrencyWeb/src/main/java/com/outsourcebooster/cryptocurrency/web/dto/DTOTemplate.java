@@ -1,7 +1,5 @@
 package com.outsourcebooster.cryptocurrency.web.dto;
 
-import com.outsourcebooster.cryptocurrency.web.model.User;
-
 /**
  * Created by rklimemnko on 30.05.2016.
  */

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -39,8 +38,10 @@ public class MainController {
 
     @RequestMapping(path = "/updateImage", method = RequestMethod.POST)
     public ModelAndView updateImage(@RequestParam("userImageFile") MultipartFile file) throws IOException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userService.updateUserImageFile(auth.getName(), file);
+        if(!file.isEmpty()) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            userService.updateUserImageFile(auth.getName(), file);
+        }
         return new ModelAndView("redirect:/");
     }
 

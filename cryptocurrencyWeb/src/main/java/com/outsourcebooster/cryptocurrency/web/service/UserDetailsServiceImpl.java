@@ -1,8 +1,8 @@
 package com.outsourcebooster.cryptocurrency.web.service;
 
 import com.outsourcebooster.cryptocurrency.web.model.User;
-import com.outsourcebooster.cryptocurrency.web.model.UserDetailsImpl;
 import com.outsourcebooster.cryptocurrency.web.repository.UserRepository;
+import com.outsourcebooster.cryptocurrency.web.model.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
