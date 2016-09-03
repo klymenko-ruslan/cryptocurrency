@@ -1,19 +1,16 @@
-package com.outsourcebooster.cryptocurrency.core.cryptocurrency.core.rest;
+package com.outsourcebooster.cryptocurrency.core.rest;
 
-import com.outsourcebooster.cryptocurrency.core.cryptocurrency.core.model.Currency;
-import com.outsourcebooster.cryptocurrency.core.cryptocurrency.core.repository.ValueRepository;
-import com.outsourcebooster.cryptocurrency.core.cryptocurrency.core.model.Value;
+import com.outsourcebooster.cryptocurrency.core.model.Currency;
+import com.outsourcebooster.cryptocurrency.core.model.Value;
+import com.outsourcebooster.cryptocurrency.core.repository.ValueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by rklimemnko on 26.05.2016.

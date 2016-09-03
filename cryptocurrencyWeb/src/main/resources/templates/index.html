@@ -32,7 +32,7 @@
 <div class="wrapper">
 
   <header class="main-header">
-    <a href="/" class="logo">
+    <a href="#" class="logo">
       <span class="logo-mini"><b>C</b>ce</span>
       <span class="logo-lg"><b>Cryptocurrency</b></span>
     </a>
@@ -43,7 +43,7 @@
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <li class="dropdown notifications-menu">
+          <li class="dropdown notifications-menu" id="notificationsButton">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning" id="numberOfNotifications">0</span>
@@ -111,7 +111,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="/"><i class="fa fa-circle-o"></i> Main dashboard</a></li>
+            <li class="windows"><a href="#" id="mainDashboardLink"><i class="fa fa-circle-o"></i> Main dashboard</a></li>
+            <li class="windows active"><a href="#" id="chartsLink"><i class="fa fa-circle-o"></i> Charts</a></li>
           </ul>
         </li>
       </ul>
@@ -121,8 +122,9 @@
   <div class="content-wrapper">
     <section class="content-header">
     </section>
-
-    <section class="content">
+    <section class="content" id="contentMain" style="display:none">
+    </section>
+    <section class="content" id="contentCharts">
 
       <div class="row">
         <div class="graph">
@@ -164,7 +166,7 @@
                   </div>
                 </div>
               </div>
-              <div id="wallet" class="col-lg-5"></div>
+              <!--<div id="wallet" class="col-lg-5"></div> -->
             </div>
           </div>
         </div>

@@ -16,6 +16,42 @@ $(document).ready(function() {
     var chartData;
     var graph;
 
+    $('#mainDashboardLink').click(function(e){
+        $('#mainDashboardLink').parent().addClass('active');
+        $('#chartsLink').parent().removeClass('active');
+        $('#contentMain').css("display","inline");
+        $('#contentCharts').css("display","none");
+    });
+    $('#chartsLink').click(function(e){
+        $('#chartsLink').parent().addClass('active');
+        $('#mainDashboardLink').parent().removeClass('active');
+        $('#contentCharts').css("display","inline");
+        $('#contentMain').css("display","none");
+    });
+
+    function loadMainContent() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8083/value/last',
+            async: false,
+            success: function (data) {
+                var mainTable = '<table  border="1" class="graph__info">';
+                mainTable += '<tr class="graph__info_name"><td>Currency</td><td>Price</td></tr>';
+                for(currency in data) {
+                    if(currency != 'id' && data[currency].price != null) {
+                        mainTable += '<tr class="graph__info_name"><td>' + currency + '</td><td>' + data[currency].price[userCurrency] + ' ' + userCurrency +'</td></tr>';
+                    }
+                }
+                mainTable += "</table>";
+                $("#contentMain").html(mainTable);
+            }
+        });
+    }
+
+    setInterval(function(){
+        loadMainContent();
+    }, 1000);
+
     function loadCurrencies() {
         $.ajax({
             type: 'GET',
@@ -212,8 +248,10 @@ $(document).ready(function() {
     function toggleEnableNotificationRulesButton() {
         if($("#enableNotification").prop('checked')) {
             $("#notificationRulesButton").css("display","block");
+            $("#notificationsButton").css("display","inline");
         } else {
             $("#notificationRulesButton").css("display","none");
+            $("#notificationsButton").css("display","none");
         }
     }
 
@@ -271,7 +309,7 @@ $(document).ready(function() {
                 $("#professionPlaceholder").text($("#profession").val());
                 userCurrency = $("#userCurrency").val();
                 $(".userCurrency").text(userCurrency);
-                buyNotified = {};
+                //data.entity.enableNotification
                 alert("User was successfully updated.");
                 $("#profile").dialog("close");
             },

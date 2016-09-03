@@ -1,4 +1,4 @@
-package com.outsourcebooster.cryptocurrency.core.cryptocurrency.core.model;
+package com.outsourcebooster.cryptocurrency.core.model;
 
 /**
  * Created by rklimemnko on 24.05.2016.

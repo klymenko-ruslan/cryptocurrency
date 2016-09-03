@@ -4,6 +4,7 @@ import com.outsourcebooster.cryptocurrency.web.config.MvcConfig;
 import com.outsourcebooster.cryptocurrency.web.exception.NotUniqueEntityException;
 import com.outsourcebooster.cryptocurrency.web.repository.UserRepository;
 import com.outsourcebooster.cryptocurrency.web.model.*;
+import com.outsourcebooster.cryptocurrency.web.util.ApplicationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,8 +47,12 @@ public class UserService {
         savedUser.setFirstName(updatedUser.getFirstName());
         savedUser.setLastName(updatedUser.getLastName());
         savedUser.setProfession(updatedUser.getProfession());
+        savedUser.setEmail(updatedUser.getEmail());
         savedUser.setUserCurrency(updatedUser.getUserCurrency());
         savedUser.setEnableNotification(updatedUser.isEnableNotification());
+        if(updatedUser.isEnableNotification()) {
+            savedUser.setNotificationRules(null);
+        }
         userRepository.save(savedUser);
         return savedUser;
     }
@@ -66,10 +71,11 @@ public class UserService {
         if(savedUser == null)
             throw new UnsupportedOperationException("There's no updatedUser with such username!");
 
+        String pathToUserImages = ApplicationUtils.getCommonProperty("cryptocurrency.web.images.path");
         if(savedUser.getImageFileName() != null)
-            Paths.get(MvcConfig.PATH_TO_USER_IMAGES, savedUser.getImageFileName()).toFile().delete();
+            Paths.get(pathToUserImages, savedUser.getImageFileName()).toFile().delete();
         String newImageFileName = username + System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        Files.copy(file.getInputStream(), Paths.get(MvcConfig.PATH_TO_USER_IMAGES, newImageFileName));
+        Files.copy(file.getInputStream(), Paths.get(pathToUserImages, newImageFileName));
 
         savedUser.setImageFileName(newImageFileName);
         userRepository.save(savedUser);

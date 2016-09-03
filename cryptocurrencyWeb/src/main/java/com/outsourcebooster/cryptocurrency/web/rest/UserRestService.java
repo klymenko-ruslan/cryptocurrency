@@ -9,7 +9,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * Created by rklimemnko on 29.05.2016.
  */
 @RestController
-public class UserController {
+public class UserRestService {
 
     @Autowired
     private UserService userService;

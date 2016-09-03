@@ -1,4 +1,4 @@
-package com.outsourcebooster;
+package com.outsourcebooster.cryptocurrency.statistics;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

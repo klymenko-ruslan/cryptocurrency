@@ -1,4 +1,4 @@
-package com.outsourcebooster.cryptocurrency.core.cryptocurrency.core.model;
+package com.outsourcebooster.cryptocurrency.core.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

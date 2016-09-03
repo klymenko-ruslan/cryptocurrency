@@ -36,6 +36,7 @@ bootRun {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.springframework.boot:spring-boot-starter-tomcat")
+    compile group: 'com.hazelcast', name: 'hazelcast', version: '3.7'
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

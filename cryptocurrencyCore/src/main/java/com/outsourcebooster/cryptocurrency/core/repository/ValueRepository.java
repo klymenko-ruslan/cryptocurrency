@@ -1,6 +1,6 @@
-package com.outsourcebooster.cryptocurrency.core.cryptocurrency.core.repository;
+package com.outsourcebooster.cryptocurrency.core.repository;
 
-import com.outsourcebooster.cryptocurrency.core.cryptocurrency.core.model.Value;
+import com.outsourcebooster.cryptocurrency.core.model.Value;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
