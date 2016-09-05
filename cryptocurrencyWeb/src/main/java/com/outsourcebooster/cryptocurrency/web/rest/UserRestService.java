@@ -25,7 +25,7 @@ public class UserRestService {
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
     public HttpEntity<DTOTemplate<User>> createUser(@RequestBody User user) {
         try {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully created.",userService.createUser(user)));
+            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully created. Confirmation link was sent on your email box.",userService.createUser(user)));
         } catch(NotUniqueEntityException e) {
             return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User with such username already exists.", user));
         }

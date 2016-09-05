@@ -1,15 +1,16 @@
 package com.outsourcebooster.cryptocurrency.web.service;
 
-import com.outsourcebooster.cryptocurrency.web.config.MvcConfig;
 import com.outsourcebooster.cryptocurrency.web.exception.NotUniqueEntityException;
 import com.outsourcebooster.cryptocurrency.web.repository.UserRepository;
 import com.outsourcebooster.cryptocurrency.web.model.*;
 import com.outsourcebooster.cryptocurrency.web.util.ApplicationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,7 +22,7 @@ import java.util.Date;
  * Created by rklimemnko on 29.05.2016.
  */
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -30,6 +31,8 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User createUser(User user) {
+        if(userRepository.findByEmail(user.getEmail()) != null)
+            throw new NotUniqueEntityException("This email is already in use.");
         if(userRepository.findByUsername(user.getUsername()) != null)
             throw new NotUniqueEntityException("This username is already in use.");
         user.setCreatedDate(new Date());
@@ -37,8 +40,34 @@ public class UserService {
         user.setWallet(new Wallet(new ArrayList<Account>()));
         user.setUserCurrency(UserCurrency.usd);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        User createdUser = userRepository.save(user);
+        new Thread(() -> ApplicationUtils.sendEmail(ACTIVATION_SUBJECT,
+                ACTIVATION_MESSAGE.replace("${link}",generateActivationLink(createdUser.getPassword())),
+                createdUser.getEmail())).start();
+        return createdUser;
     }
+
+    public void activateUser(String activationProperty) {
+        User activatedUser = userRepository.findByPassword(activationProperty);
+        if(activatedUser != null) {
+            activatedUser.setIsActive(true);
+            userRepository.save(activatedUser);
+        }
+    }
+
+    private String generateActivationLink(String decodedPassword) {
+        StringBuilder url = new StringBuilder();
+        url.append(ApplicationUtils.getCommonProperty("cryptocurrency.web.url"))
+            .append(":")
+            .append(ApplicationUtils.getCommonProperty("cryptocurrency.web.port"))
+            .append("/activate?activationProperty=")
+            .append(decodedPassword);
+        return url.toString();
+    }
+
+    private static final String ACTIVATION_SUBJECT = "Activation";
+    private static final String ACTIVATION_MESSAGE = "Please follow this link to finish your registration: <a href='${link}'>Activate</a>";
+
 
     public User updateUserProfile(User updatedUser) {
         User savedUser = userRepository.findByUsername(updatedUser.getUsername());
@@ -87,4 +116,13 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+        if(user == null)
+            throw new UsernameNotFoundException(username);
+        if(!user.isActive())
+            throw new RuntimeException("User is not activated!");
+        return new UserDetailsImpl(user);
+    }
 }

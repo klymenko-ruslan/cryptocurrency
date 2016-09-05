@@ -41,6 +41,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile group: 'com.hazelcast', name: 'hazelcast', version: '3.7'
+    compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.5.6'
+    compile ('org.springframework.social:spring-social-facebook:2.0.3.RELEASE')
     //compile("org.ethereum:ethereumj-core:1.1.0-RELEASE")
   //  compile("org.bitcoinj:bitcoinj-core:0.14.2")
     testCompile('org.springframework.boot:spring-boot-starter-test')
