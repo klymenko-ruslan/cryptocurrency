@@ -1,0 +1,12 @@
+<div style="text-align:center">
+  <h1>
+    Authorization
+  </h1>
+  <input class="form-control" [value]="username" id="userName" name="userName" >
+  <input class="form-control" [value]="password" id="password" name="password" >
+  <button title="Authorize" type="button" class="btn btn-default" (click)="login()" >
+    Login
+  </button>
+  <button title="Authorize" type="button" class="btn btn-default" (click)="loginFb()">Connect to Facebook</button>
+</div>
+

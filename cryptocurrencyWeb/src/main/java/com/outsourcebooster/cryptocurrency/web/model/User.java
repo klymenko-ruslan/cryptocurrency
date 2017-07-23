@@ -1,5 +1,6 @@
 package com.outsourcebooster.cryptocurrency.web.model;
 
+import com.outsourcebooster.cryptocurrency.web.config.security.constant.SecurityRole;
 import org.springframework.data.annotation.Id;
 
 import java.util.Collection;
@@ -23,7 +24,7 @@ public class User {
     private boolean enableNotification;
     private String imageFileName;
     private Collection<NotificationRule> notificationRules;
-    private Collection<Role> roles;
+    private Collection<String> roles;
     private Wallet wallet;
     @Override
     public String toString() {
@@ -42,7 +43,7 @@ public class User {
 
     public User() {}
 
-    public User(String username, String password, Collection<Role> roles) {
+    public User(String username, String password, Collection<String> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
@@ -64,11 +65,11 @@ public class User {
         this.password = password;
     }
 
-    public Collection<Role> getRoles() {
+    public Collection<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(Collection<String> roles) {
         this.roles = roles;
     }
 

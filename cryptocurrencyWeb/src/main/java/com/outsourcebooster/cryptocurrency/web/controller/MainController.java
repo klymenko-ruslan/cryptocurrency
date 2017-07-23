@@ -37,8 +37,8 @@ import java.util.UUID;
 @RestController
 public class MainController {
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
     private FacebookConnectionFactory facebookConnectionFactory;
     private String applicationHost;
@@ -94,16 +94,16 @@ public class MainController {
     @RequestMapping("/")
     public ModelAndView index(ModelAndView modelAndView) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getUserByUsername(auth.getName());
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("currencies", UserCurrency.values());
-        modelAndView.setViewName("index");
+//        User user = userService.getUserByUsername(auth.getName());
+//        modelAndView.addObject("user", user);
+//        modelAndView.addObject("currencies", UserCurrency.values());
+//        modelAndView.setViewName("index");
         return modelAndView;
     }
 
     @RequestMapping("/activate")
     public ModelAndView activateUser(@RequestParam("activationProperty") String activationProperty) {
-        userService.activateUser(activationProperty);
+    //    userService.activateUser(activationProperty);
         return new ModelAndView("redirect:/");
     }
 
@@ -111,7 +111,7 @@ public class MainController {
     public ModelAndView updateImage(@RequestParam("userImageFile") MultipartFile file) throws IOException {
         if(!file.isEmpty()) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            userService.updateUserImageFile(auth.getName(), file);
+         //   userService.updateUserImageFile(auth.getName(), file);
         }
         return new ModelAndView("redirect:/");
     }

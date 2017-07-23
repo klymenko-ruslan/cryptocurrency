@@ -49,4 +49,8 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
 
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+
+
+
 }

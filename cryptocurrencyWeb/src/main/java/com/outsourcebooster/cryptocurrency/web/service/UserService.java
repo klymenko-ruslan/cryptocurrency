@@ -1,10 +1,12 @@
 package com.outsourcebooster.cryptocurrency.web.service;
 
+import com.outsourcebooster.cryptocurrency.web.config.security.constant.SecurityRole;
 import com.outsourcebooster.cryptocurrency.web.exception.NotUniqueEntityException;
 import com.outsourcebooster.cryptocurrency.web.repository.UserRepository;
 import com.outsourcebooster.cryptocurrency.web.model.*;
 import com.outsourcebooster.cryptocurrency.web.util.ApplicationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,12 +18,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 /**
  * Created by rklimemnko on 29.05.2016.
  */
-@Service
+//@Service
 public class UserService implements UserDetailsService {
 
     @Autowired
@@ -36,7 +41,7 @@ public class UserService implements UserDetailsService {
         if(userRepository.findByUsername(user.getUsername()) != null)
             throw new NotUniqueEntityException("This username is already in use.");
         user.setCreatedDate(new Date());
-        user.setRoles(Arrays.asList(new Role[]{Role.user}));
+        user.setRoles(Arrays.asList(new String[]{SecurityRole.USER}));
         user.setWallet(new Wallet(new ArrayList<Account>()));
         user.setUserCurrency(UserCurrency.usd);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -116,6 +121,18 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+    public Collection<GrantedAuthority> getUserAuthorities(String username, String password) {
+        User user = getUserByUsername(username);
+        return user == null ?  Collections.emptySet() :
+                user.getRoles()
+                    .stream().map(role -> new GrantedAuthority(){
+                    @Override
+                    public String getAuthority() {
+                        return role;
+                    }
+                }).collect(Collectors.toSet());
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -123,6 +140,6 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         if(!user.isActive())
             throw new RuntimeException("User is not activated!");
-        return new UserDetailsImpl(user);
+        return null;
     }
 }

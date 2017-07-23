@@ -17,38 +17,29 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 public class UserRestService {
-
-    @Autowired
-    private UserService userService;
+//
+//    @Autowired
+//    private UserService userService;
 
     @ResponseBody
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
     public HttpEntity<DTOTemplate<User>> createUser(@RequestBody User user) {
-        try {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully created. Confirmation link was sent on your email box.",userService.createUser(user)));
-        } catch(NotUniqueEntityException e) {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User with such username already exists.", user));
-        }
+        return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
+
     }
 
     @ResponseBody
     @RequestMapping(value = "/user/updateProfile", method = RequestMethod.POST)
     public HttpEntity<DTOTemplate<User>> updateUserProfile(@RequestBody User user) {
-        try {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully updated.",userService.updateUserProfile(user)));
-        } catch(UnsupportedOperationException e) {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
-        }
+        return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
+
     }
 
     @ResponseBody
     @RequestMapping(value = "/user/updateNotificationRules", method = RequestMethod.POST)
     public HttpEntity<DTOTemplate<User>> updateUserNotificationRules(@RequestBody User user) {
-        try {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("User was successfully updated.",userService.updateUserNotificationRules(user)));
-        } catch(UnsupportedOperationException e) {
-            return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
-        }
+        return new HttpEntity<DTOTemplate<User>>(new DTOTemplate<User>("There's no user with such username!", user));
+
     }
 
     @ResponseBody
@@ -56,7 +47,7 @@ public class UserRestService {
     public HttpEntity<User> getUser(HttpSession session) {
         SecurityContextImpl securityContext = (SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = ((UsernamePasswordAuthenticationToken)securityContext.getAuthentication()).getName();
-        User user = userService.getUserByUsername(username);
+        User user = null;//userService.getUserByUsername(username);
         return new HttpEntity<User>(user);
     }
 
@@ -65,7 +56,7 @@ public class UserRestService {
     public HttpEntity<User> notify(HttpSession session, HttpServletRequest request) {
         SecurityContextImpl securityContext = (SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT");
         String username = ((UsernamePasswordAuthenticationToken)securityContext.getAuthentication()).getName();
-        User user = userService.getUserByUsername(username);
+        User user = null;//userService.getUserByUsername(username);
         return new HttpEntity<User>(user);
     }
 }
