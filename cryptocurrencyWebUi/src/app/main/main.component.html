@@ -1,232 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 
-  <title>Cryptocurrency exchange</title>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
-
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-
-  <header class="main-header">
-    <a href="#" class="logo">
-      <span class="logo-mini"><b>C</b>ce</span>
-      <span class="logo-lg"><b>Cryptocurrency</b></span>
-    </a>
-    <nav class="navbar navbar-static-top">
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <li class="dropdown notifications-menu" id="notificationsButton">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning" id="numberOfNotifications">0</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li id="notificationList"></li>
-            </ul>
-          </li>
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="hidden-xs">User menu</span>
-            </a>
-            <button title="Logout" type="button" class="btn btn-default" (click)="logout()" >
-              Logout
-            </button>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img th:src="${user.imageFileName != null ? ('img/user/' + user.imageFileName) : 'img/user/noImg.jpg'}"  id="userImageButton" />
-                <p>
-                  <span th:text="${user.username}"></span>
-                  <span th:if="${user.firstName}">
-                    (
-                      <span th:text="${user.firstName}" id="firstNamePlaceholder"></span>
-                      <span th:text="${user.lastName}" id="lastNamePlaceholder"></span>
-                    )
-                  </span>
-                  <span th:if="${user.profession}">
-                    - <span th:text="${user.profession}" id="professionPlaceholder"></span>
-                  </span>
-                  <small>Member since <span th:text="${user.createdDate}"></span></small>
-                </p>
-              </li>
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat" id="profileButton">Profile</a>
-                </div>
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat" id="notificationRulesButton">Settings</a>
-                </div>
-                <div class="pull-right">
-                  <a href="/logout" class="btn btn-default btn-flat" >Log out</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <aside class="main-sidebar">
-    <section class="sidebar">
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img th:src="${user.imageFileName != null ? ('img/user/' + user.imageFileName) : 'img/user/noImg.jpg'}" />
-        </div>
-        <div class="pull-left info">
-          <p><span th:text="${user.username}"></span></p>
-          <i class="fa fa-circle text-success"></i> Online
-        </div>
-      </div>
-      <ul class="sidebar-menu">
-        <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Dashboards</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="windows"><a href="#" id="mainDashboardLink"><i class="fa fa-circle-o"></i> Main dashboard</a></li>
-            <li class="windows active"><a href="#" id="chartsLink"><i class="fa fa-circle-o"></i> Charts</a></li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-  </aside>
-
-  <div class="content-wrapper">
-    <section class="content-header">
-    </section>
-    <section class="content" id="contentMain" style="display:none">
-    </section>
-    <section class="content" id="contentCharts">
-
-      <div class="row">
-        <div class="graph">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-7">
-                <div id="userChart" class="graph__data"></div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <div class="select">
-                      <select id="currency" class="currency__name">
-                      </select>
-                      <select id="period" class="currency__period">
-                        <option name="minute">minute</option>
-                        <option name="hour">hour</option>
-                        <option name="day" selected="selected">day</option>
-                        <option name="week">week</option>
-                        <option name="month">month</option>
-                        <option name="year">year</option>
-                        <option name="all">all</option>
-                      </select>
+        <div class="row">
+          <div class="graph">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-7">
+                  <div id="userChart" class="graph__data"></div>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="select">
+                        <select [(ngModel)]="selectedCurrency" id="currency" class="currency__name" (change)="currencyChanged($event.target.value)">
+                          <option *ngFor="let c of currencies" [ngValue]="c">{{c}}</option>
+                        </select>
+                        <select id="period" class="currency__period" (change)="periodChanged($event.target.value)">
+                          <option value="minute">{{'MENU.PERIOD.MINUTE'|translate}}</option>
+                          <option value="hour">{{'MENU.PERIOD.HOUR'|translate}}</option>
+                          <option value="day" selected="selected">{{'MENU.PERIOD.DAY'|translate}}</option>
+                          <option value="week">{{'MENU.PERIOD.WEEK'|translate}}</option>
+                          <option value="month">{{'MENU.PERIOD.MONTH'|translate}}</option>
+                          <option value="year">{{'MENU.PERIOD.YEAR'|translate}}</option>
+                          <option value="all">{{'MENU.PERIOD.ALL'|translate}}</option>
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-8">
-                    <table border="1" class="graph__info">
-                      <tr class="graph__info_name">
-                        <th>Last price</th>
-                        <th id="periodDailyChangeLabel"></th>
-                        <th id="periodDailyHighLabel"></th>
-                        <th id="periodDailyLowLabel"></th>
-                      </tr>
-                      <tr>
-                        <td id="periodLastPrice"></td>
-                        <td id="periodDailyChange"></td>
-                        <td id="periodDailyHigh"></td>
-                        <td id="periodDailyLow"></td>
-                      </tr>
-                    </table>
+                    <div class="col-lg-8">
+                      <table border="1" class="graph__info">
+                        <tr class="graph__info_name">
+                          <th>{{'MENU.AVERAGE_PRICE'|translate}}</th>
+                          <th>{{'MENU.LAST_PRICE'|translate}}</th>
+                          <th>{{'MENU.DAILY_CHANGE_IN_PRICE'|translate}}</th>
+                          <th>{{'MENU.HIGHEST_DAILY_PRICE'|translate}}</th>
+                          <th>{{'MENU.LOWEST_DAILY_PRICE'|translate}}</th>
+                        </tr>
+                        <tr>
+                          <td id="periodAverage">{{averagePrice}}</td>
+                          <td id="periodLastPrice">{{lastPrice}}</td>
+                          <td id="periodDailyChange">{{differencePrice}}</td>
+                          <td id="periodDailyHigh">{{maxPrice}}</td>
+                          <td id="periodDailyLow">{{minPrice}}</td>
+                        </tr>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-              <!--<div id="wallet" class="col-lg-5"></div> -->
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 1.0.0
-    </div>
-    <strong>Copyright &copy; 2016 <a href="https://new.vk.com/klymenko.ruslan">Klymenko</a>.</strong> All rights
-    reserved.
-  </footer>
 
-  <div id="profile" style="display:none">
-    <table>
-      <tr>
-        <td>Username:</td>
-        <td><span th:text="${user.username}"></span></td>
-      </tr>
-      <tr>
-        <td>First name:</td>
-        <td><input id="firstName" th:value="${user.firstName}" /></td>
-      </tr>
-      <tr>
-        <td>Last name:</td>
-        <td><input id="lastName" th:value="${user.lastName}" /></td>
-      </tr>
-      <tr>
-        <td>Profession:</td>
-        <td><input id="profession" th:value="${user.profession}" /></td>
-      </tr>
-      <tr>
-        <td>Email:</td>
-        <td><input id="email" th:value="${user.email}" /></td>
-      </tr>
-      <tr>
-        <td>Currency:</td>
-        <td>
-          <select id="userCurrency">
-            <option th:each="currency : ${currencies}"><span th:text="${currency}"></span></option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Enable notification:</td>
-        <td><input type="checkbox" id="enableNotification" /></td>
-      </tr>
-    </table>
-    <button id="profileSaveButton">Save</button>
-  </div>
-  <div id="notificationRules" style="display:none">
-    Estimate the cost:
-    <table>
-      <tr>
-        <td>btc</td>
-        <td><input id="btcNotificationRule" /></td>
-        <td><span th:text="${user.userCurrency} " class="userCurrency" ></span></td>
-      </tr>
-      <tr>
-        <td>eth</td>
-        <td><input id="ethNotificationRule" /></td>
-        <td><span th:text="${user.userCurrency} " class="userCurrency"></span></td>
-      </tr>
-    </table>
-    <button id="notificationRulesSaveButton">Save</button>
-  </div>
-  <div id="userImage">
-    <form action="#" th:action="@{/updateImage}" method="post" enctype="multipart/form-data">
-      Select image to upload:
-      <input type="file" name="userImageFile" />
-      <input type="submit" value="Upload Image" />
-    </form>
-  </div>
-</div>
-</body>
-</html>
+
+
+

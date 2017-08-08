@@ -16,7 +16,7 @@ public class CryptocurrencyCoreApplication {
 
 	public static void main(String[] args) throws IOException {
 
-	//	Runtime.getRuntime().exec("mongod");
+		Runtime.getRuntime().exec("mongod");
 
 		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(CryptocurrencyCoreApplication.class);
 

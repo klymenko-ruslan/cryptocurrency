@@ -1,5 +1,87 @@
-<script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
-<div class="container">
-  <!--<app-messaging></app-messaging>-->
-  <router-outlet></router-outlet>
+<div class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+    <header class="main-header">
+      <a href="#" class="logo">
+        <span class="logo-mini"><b>C</b>ce</span>
+        <span class="logo-lg"><b>Cryptocurrency</b></span>
+      </a>
+      <nav class="navbar navbar-static-top">
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <li>
+              <select #langSelect (change)="translate.use(langSelect.value)" id="languageSelect" class="form-control input" style="width:22%">
+                <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+              </select>
+            </li>
+            <li class="dropdown notifications-menu" id="notificationsButton">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-warning" id="numberOfNotifications">0</span>
+              </a>
+            </li>
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="hidden-xs">{{ 'MENU.USER_OPTIONS'|translate }}</span>
+              </a>
+            </li>
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" (click)="logout()">
+                <span class="hidden-xs">{{ 'MENU.LOGOUT'|translate }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+  </div>
 </div>
+<div >
+  <div class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <aside class="main-sidebar">
+        <section class="sidebar">
+
+          <ul class="sidebar-menu">
+            <li class="header">{{'MENU.NAVIGATION'|translate}}</li>
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i> <span>{{'MENU.DASHBOARDS'|translate}}</span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="windows active" id="linkCharts"><a href="#" id="chartsLink"><i class="fa fa-circle-o"></i> {{'MENU.CHARTS'|translate}}</a></li>
+                <li class="windows" id="linkLoans"><a href="#" id="loansLink"><i class="fa fa-circle-o"></i> {{'MENU.LOANS'|translate}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </aside>
+
+      <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content" id="contentMain" style="display:none">
+        </section>
+        <section class="content" id="contentCharts">
+
+          <!--<app-messaging></app-messaging>-->
+        <router-outlet></router-outlet>
+
+        </section>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer class="main-footer">
+  <div class="pull-right hidden-xs">
+    <b>{{'MENU.VERSION'|translate}}</b> 1.0.0
+  </div>
+  <strong>{{'MENU.COPYRIGHT'|translate}} &copy; 2017 <a href="https://github.com/klymenko-ruslan">Klymenko</a>.</strong>
+  {{'MENU.ALL_RIGHTS_RESERVED'|translate}}
+</footer>

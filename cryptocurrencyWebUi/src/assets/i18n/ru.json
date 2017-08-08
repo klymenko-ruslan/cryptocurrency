@@ -1,0 +1,34 @@
+{
+  "MENU": {
+    "USER_OPTIONS": "Настройки",
+    "LOGOUT": "Выйти",
+    "NAVIGATION": "Навигация",
+    "DASHBOARDS": "Панели",
+    "CHARTS": "Графики",
+    "LOANS": "Кредиты",
+    "PERIOD": {
+      "MINUTE": "Минута",
+      "HOUR": "Час",
+      "DAY": "День",
+      "WEEK": "Неделя",
+      "MONTH": "Месяц",
+      "YEAR": "Год",
+      "ALL": "За всё время"
+    },
+    "AVERAGE_PRICE": "Средняя цена",
+    "LAST_PRICE": "Последняя цена",
+    "DAILY_CHANGE_IN_PRICE": "Разница за период",
+    "HIGHEST_DAILY_PRICE":"Наибольшая цена за период",
+    "LOWEST_DAILY_PRICE":"Наимeньшая цена за период",
+    "VERSION": "Версия",
+    "COPYRIGHT": "Копирайт",
+    "ALL_RIGHTS_RESERVED": "Все права защищены"
+  },
+  "AUTHORIZATION": {
+    "AUTHORIZATION": "Авторизация",
+    "LOGIN": "Вход",
+    "LOGIN_FACEBOOK": "Вход через Facebook",
+    "EMAIL": "Электронная почта",
+    "PASSWORD": "Пароль"
+  }
+}

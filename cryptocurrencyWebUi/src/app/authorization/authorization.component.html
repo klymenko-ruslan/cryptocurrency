@@ -1,12 +1,24 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
+</head>
+
 <div style="text-align:center">
   <h1>
-    Authorization
+    {{ 'AUTHORIZATION.AUTHORIZATION'|translate }}
   </h1>
-  <input class="form-control" [value]="username" id="userName" name="userName" >
-  <input class="form-control" [value]="password" id="password" name="password" >
-  <button title="Authorize" type="button" class="btn btn-default" (click)="login()" >
-    Login
+  <div>
+    <p>{{ 'AUTHORIZATION.EMAIL'|translate }}:</p>
+    <input class="form-control" [value]="email" id="email" name="email" class="form-control input" >
+  </div>
+  <div>
+    <p>{{ 'AUTHORIZATION.PASSWORD'|translate }}:</p>
+    <input class="form-control" [value]="password" id="password" name="password"  class="form-control input">
+  </div>
+  <button title="Authorize" type="button" class="btn btn-default" (click)="login()" class="btn btn-default" >
+    {{ 'AUTHORIZATION.LOGIN'|translate }}
   </button>
-  <button title="Authorize" type="button" class="btn btn-default" (click)="loginFb()">Connect to Facebook</button>
+  <button title="Authorize" type="button" class="btn btn-default" (click)="loginWithFacebook()" class="btn btn-default">{{ 'AUTHORIZATION.LOGIN_FACEBOOK'|translate }}</button>
+
+  <button title="Authorize" type="button" class="btn btn-default" (click)="share()" class="btn btn-default">Share</button>
 </div>
 

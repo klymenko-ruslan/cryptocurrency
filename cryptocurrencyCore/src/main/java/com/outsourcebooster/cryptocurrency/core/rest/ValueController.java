@@ -16,9 +16,9 @@ import java.util.List;
  * Created by rklimemnko on 26.05.2016.
  */
 @RestController
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin({"http://localhost:8081","http://localhost:4200"})
 @RequestMapping("/value")
-public class ValueService {
+public class ValueController {
 
     @Autowired
     private ValueRepository valueRepository;

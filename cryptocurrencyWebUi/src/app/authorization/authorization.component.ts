@@ -1,22 +1,29 @@
 import { Component } from '@angular/core';
 import {AuthorizationService} from './authorization.service';
 import {Router} from '@angular/router';
+import {FacebookService, InitParams, LoginResponse, UIParams, UIResponse} from "ngx-facebook";
 
 @Component({
   templateUrl: './authorization.component.html',
-  styleUrls: ['./authorization.component.css'],
+  styleUrls: ['../styles/AdminLTE.min.css',
+    '../styles/bootstrap.min.css',
+    '../styles/main.css',
+    '../styles/skins/_all-skins.min.css'],
   providers: [AuthorizationService]
 })
 export class AuthorizationComponent {
-  username = 'a';
+
+  // todo: remove hardcoded creds
+  email = 'klymenko.ruslan.primary@gmail.com';
   password = 'a';
 
-  constructor(private authorizationService: AuthorizationService, private router: Router) {
+  constructor(private authorizationService: AuthorizationService, private router: Router, private fb: FacebookService) {
   }
 
   login() {
-    const object = this.authorizationService.login(this.username, this.password);
+    const object = this.authorizationService.login(this.email, this.password);
     object.subscribe(token => {
+        localStorage.setItem('tokenType', 'local');
         localStorage.setItem('token', token);
         this.router.navigate(['/']);
       },
@@ -24,34 +31,27 @@ export class AuthorizationComponent {
     // todo: error handling, localization
   }
 
-  loginFb() {
-    const object = this.authorizationService.fb();
-    object.subscribe(token => {
-        alert(token);
-        // localStorage.setItem('token', token);
+  loginWithFacebook(): void {
+    this.fb.login()
+      .then((response: LoginResponse) => {
+        localStorage.setItem('tokenType', 'fb');
+        localStorage.setItem('token', response.authResponse['accessToken']);
         this.router.navigate(['/']);
-      },
-      err => alert('err ' + err));
-    // todo: error handling, localization
+      })
+      .catch((error: any) => console.error(error));
+
   }
 
-  loginFb2() {
-    FB.login(function(result) {
-      this.loged = true;
-      this.token = result;
-    }, { scope: 'user_friends' });
+  share(url: string) {
+    const params: UIParams = {
+      href: 'https://github.com/klymenko-ruslan/cryptocurrency',
+      method: 'share'
+    };
+
+    this.fb.ui(params)
+      .then((res: UIResponse) => console.log(res))
+      .catch((e: any) => console.error(e));
   }
 
-  me() {
-    FB.api('/me?fields=id,name,first_name,gender,picture.width(150).height(150),age_range,friends',
-      function(result) {
-        if (result && !result.error) {
-          this.user = result;
-          console.log(this.user);
-        } else {
-          console.log(result.error);
-        }
-      });
-  }
 
 }

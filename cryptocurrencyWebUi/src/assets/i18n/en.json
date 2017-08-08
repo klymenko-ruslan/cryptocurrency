@@ -1,0 +1,34 @@
+{
+  "MENU": {
+    "USER_OPTIONS": "Settings",
+    "LOGOUT": "Logout",
+    "NAVIGATION": "Navigation",
+    "DASHBOARDS": "Dashboards",
+    "CHARTS": "Charts",
+    "LOANS": "Loans",
+    "PERIOD": {
+      "MINUTE": "Minute",
+      "HOUR": "Hour",
+      "DAY": "Day",
+      "WEEK": "Week",
+      "MONTH": "Month",
+      "YEAR": "Year",
+      "ALL": "All"
+    },
+    "AVERAGE_PRICE": "Average price",
+    "LAST_PRICE": "Last price",
+    "DAILY_CHANGE_IN_PRICE": "Change in price",
+    "HIGHEST_DAILY_PRICE":"Highest price",
+    "LOWEST_DAILY_PRICE":"Lowest price",
+    "VERSION": "Version",
+    "COPYRIGHT": "Copyright",
+    "ALL_RIGHTS_RESERVED": "All rights reserved"
+  },
+  "AUTHORIZATION": {
+    "AUTHORIZATION": "Authorization",
+    "LOGIN": "Login",
+    "LOGIN_FACEBOOK": "Login using Facebook",
+    "EMAIL": "Email",
+    "PASSWORD": "Password"
+  }
+}

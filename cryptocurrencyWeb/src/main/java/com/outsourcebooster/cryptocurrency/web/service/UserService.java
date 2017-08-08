@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 /**
  * Created by rklimemnko on 29.05.2016.
  */
-//@Service
-public class UserService implements UserDetailsService {
+@Service
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -38,8 +38,6 @@ public class UserService implements UserDetailsService {
     public User createUser(User user) {
         if(userRepository.findByEmail(user.getEmail()) != null)
             throw new NotUniqueEntityException("This email is already in use.");
-        if(userRepository.findByUsername(user.getUsername()) != null)
-            throw new NotUniqueEntityException("This username is already in use.");
         user.setCreatedDate(new Date());
         user.setRoles(Arrays.asList(new String[]{SecurityRole.USER}));
         user.setWallet(new Wallet(new ArrayList<Account>()));
@@ -75,8 +73,8 @@ public class UserService implements UserDetailsService {
 
 
     public User updateUserProfile(User updatedUser) {
-        User savedUser = userRepository.findByUsername(updatedUser.getUsername());
-        if(userRepository.findByUsername(updatedUser.getUsername()) == null)
+        User savedUser = userRepository.findByEmail(updatedUser.getEmail());
+        if(savedUser == null)
             throw new UnsupportedOperationException("There's no updatedUser with such username!");
         savedUser.setFirstName(updatedUser.getFirstName());
         savedUser.setLastName(updatedUser.getLastName());
@@ -92,23 +90,23 @@ public class UserService implements UserDetailsService {
     }
 
     public User updateUserNotificationRules(User updatedUser) {
-        User savedUser = userRepository.findByUsername(updatedUser.getUsername());
-        if(userRepository.findByUsername(updatedUser.getUsername()) == null)
+        User savedUser = userRepository.findByEmail(updatedUser.getEmail());
+        if(savedUser == null)
             throw new UnsupportedOperationException("There's no updatedUser with such username!");
         savedUser.setNotificationRules(updatedUser.getNotificationRules());
         userRepository.save(savedUser);
         return savedUser;
     }
 
-    public User updateUserImageFile(String username, MultipartFile file) throws IOException {
-        User savedUser = userRepository.findByUsername(username);
+    public User updateUserImageFile(String email, MultipartFile file) throws IOException {
+        User savedUser = userRepository.findByEmail(email);
         if(savedUser == null)
             throw new UnsupportedOperationException("There's no updatedUser with such username!");
 
         String pathToUserImages = ApplicationUtils.getCommonProperty("cryptocurrency.web.images.path");
         if(savedUser.getImageFileName() != null)
             Paths.get(pathToUserImages, savedUser.getImageFileName()).toFile().delete();
-        String newImageFileName = username + System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String newImageFileName = email + System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         Files.copy(file.getInputStream(), Paths.get(pathToUserImages, newImageFileName));
 
         savedUser.setImageFileName(newImageFileName);
@@ -117,8 +115,8 @@ public class UserService implements UserDetailsService {
         return savedUser;
     }
 
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User getUserByUsername(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public Collection<GrantedAuthority> getUserAuthorities(String username, String password) {
@@ -131,15 +129,5 @@ public class UserService implements UserDetailsService {
                         return role;
                     }
                 }).collect(Collectors.toSet());
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if(user == null)
-            throw new UsernameNotFoundException(username);
-        if(!user.isActive())
-            throw new RuntimeException("User is not activated!");
-        return null;
     }
 }
