@@ -1,15 +1,12 @@
 package com.outsourcebooster.cryptocurrency.web.service;
 
+import com.outsourcebooster.cryptocurrency.common.util.ApplicationUtils;
 import com.outsourcebooster.cryptocurrency.web.config.security.constant.SecurityRole;
 import com.outsourcebooster.cryptocurrency.web.exception.NotUniqueEntityException;
 import com.outsourcebooster.cryptocurrency.web.repository.UserRepository;
 import com.outsourcebooster.cryptocurrency.web.model.*;
-import com.outsourcebooster.cryptocurrency.web.util.ApplicationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

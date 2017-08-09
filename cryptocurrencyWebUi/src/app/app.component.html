@@ -52,8 +52,18 @@
               </span>
               </a>
               <ul class="treeview-menu">
-                <li class="windows active" id="linkCharts"><a href="#" id="chartsLink"><i class="fa fa-circle-o"></i> {{'MENU.CHARTS'|translate}}</a></li>
-                <li class="windows" id="linkLoans"><a href="#" id="loansLink"><i class="fa fa-circle-o"></i> {{'MENU.LOANS'|translate}}</a></li>
+                <li class="windows active" id="linkCharts">
+                  <a href="#" (click)="openPage($event)">
+                    <i class="fa fa-circle-o"></i>
+                    {{'MENU.CHARTS'|translate}}
+                  </a>
+                </li>
+                <li class="windows" id="linkLoans">
+                  <a href="#" (click)="openPage($event)">
+                    <i class="fa fa-circle-o"></i>
+                    {{'MENU.LOANS'|translate}}
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>

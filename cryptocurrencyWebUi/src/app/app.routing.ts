@@ -6,8 +6,8 @@ import {LoanComponent} from './loan/loan.component';
 
 
 const appRoutes: Routes = [
-  { path: 'main', component: MainComponent, canActivate: [AuthorizationGuardService] },
   { path: 'login', component: AuthorizationComponent },
+  { path: 'main', component: MainComponent, canActivate: [AuthorizationGuardService] },
   { path: 'loan', component: LoanComponent, canActivate: [AuthorizationGuardService] },
   { path: '**', redirectTo: 'main' }
 ];

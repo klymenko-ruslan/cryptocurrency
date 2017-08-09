@@ -4,7 +4,7 @@ package com.outsourcebooster.cryptocurrency.web.config;
  * Created by rklimemnko on 29.05.2016.
  */
 
-import com.outsourcebooster.cryptocurrency.web.util.ApplicationUtils;
+import com.outsourcebooster.cryptocurrency.common.util.ApplicationUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

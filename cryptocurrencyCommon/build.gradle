@@ -1,22 +1,7 @@
-buildscript {
-	ext {
-		springBootVersion = '1.4.0.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
-}
-
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'spring-boot'
 
 jar {
 	baseName = 'common'
-	version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -27,8 +12,7 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile("org.springframework.boot:spring-boot-starter-tomcat")
 	compile group: 'com.hazelcast', name: 'hazelcast', version: '3.7'
-
+    compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.5.6'
 }

@@ -1,6 +1,6 @@
 package com.outsourcebooster.cryptocurrency.web;
 
-import com.outsourcebooster.cryptocurrency.web.util.ApplicationUtils;
+import com.outsourcebooster.cryptocurrency.common.util.ApplicationUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

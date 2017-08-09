@@ -1,6 +1,6 @@
 
 
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   templateUrl: './loan.component.html',
@@ -9,22 +9,10 @@ import {AfterViewInit, Component, ElementRef} from '@angular/core';
     '../styles/main.css',
     '../styles/skins/_all-skins.min.css']
 })
-export class LoanComponent implements AfterViewInit {
+export class LoanComponent {
 
-  constructor(private elRef: ElementRef) {
+  constructor() {
 
-  }
-
-  ngAfterViewInit() {
-    const elements = this.elRef.nativeElement.getElementsByClassName('row');
-    alert(elements.length);
-    elements.forEach((item => {
-      if(item.name === 'linkLoans') {
-        item.addClassName('active');
-      } else {
-        item.removeClass('active');
-      }
-    }));
   }
 
 }

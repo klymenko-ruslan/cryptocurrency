@@ -1,3 +1,5 @@
+include 'cryptocurrencyCommon'
+include 'cryptocurrencyDatagrid'
 include 'cryptocurrencyCore'
 include 'cryptocurrencyWeb'
-include 'cryptocurrencyCommon'
+

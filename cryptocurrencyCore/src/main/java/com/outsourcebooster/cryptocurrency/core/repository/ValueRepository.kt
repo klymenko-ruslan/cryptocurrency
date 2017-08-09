@@ -11,7 +11,7 @@ import java.util.List;
  * Created by rklimemnko on 24.05.2016.
  */
 @Repository
-public interface ValueRepository extends MongoRepository<Value, String> {
-    Value findFirstByOrderByDateDesc();
-    List<Value> findByDateBetween(LocalDateTime start, LocalDateTime end);
+interface ValueRepository: MongoRepository<Value, String> {
+    fun findFirstByOrderByDateDesc(): Value
+    fun findByDateBetween(start: LocalDateTime, end: LocalDateTime): List<Value>
 }

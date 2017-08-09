@@ -1,8 +1,8 @@
 package com.outsourcebooster.cryptocurrency.core;
 
+import com.outsourcebooster.cryptocurrency.common.util.ApplicationUtils;
 import com.outsourcebooster.cryptocurrency.core.model.Value;
 import com.outsourcebooster.cryptocurrency.core.repository.ValueRepository;
-import com.outsourcebooster.cryptocurrency.core.util.ApplicationUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
