@@ -21,32 +21,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthenticationRestController {
+open class AuthenticationRestController(private val authenticationManager: AuthenticationManager,
+                                        private val jwtTokenUtil: JwtTokenUtil,
+                                        private val userDetailsService: UserDetailsService) {
 
-    @Value("${jwt.header}")
-    private String tokenHeader;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @RequestMapping(value = "auth", method = RequestMethod.POST)
-    public ResponseEntity<JwtAuthenticationResponse> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+    @RequestMapping(value = "auth", method = arrayOf(RequestMethod.POST))
+    fun  createAuthenticationToken(@RequestBody  authenticationRequest: JwtAuthenticationRequest): ResponseEntity<JwtAuthenticationResponse> {
+        val usernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(),
                 authenticationRequest.getPassword()
         );
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        val authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-        String token = jwtTokenUtil.generateToken(userDetails);
+        val userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        val token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+        return ResponseEntity.ok(JwtAuthenticationResponse(token));
     }
 }
