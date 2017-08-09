@@ -23,13 +23,13 @@ open class AuthenticationRestController(private val authenticationManager: Authe
     @RequestMapping(value = "auth", method = arrayOf(RequestMethod.POST))
     fun  createAuthenticationToken(@RequestBody  authenticationRequest: JwtAuthenticationRequest): ResponseEntity<JwtAuthenticationResponse> {
         val usernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken(
-                authenticationRequest.getEmail(),
-                authenticationRequest.getPassword()
+                authenticationRequest.email,
+                authenticationRequest.password
         );
         val authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        val userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        val userDetails = userDetailsService.loadUserByUsername(authenticationRequest.email);
         val token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(JwtAuthenticationResponse(token));
