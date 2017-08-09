@@ -14,13 +14,13 @@ open class JwtUserDetailsService(private val userRepository: UserRepository): Us
         val user = userRepository.findByEmail(email);
         if(user == null)  throw UsernameNotFoundException(String.format("No user found with email '%s'.", email));
         return object: UserDetails {
-            override fun getAuthorities() = toGrantedAuthorities(user.getRoles())
-            override fun getPassword() = user.getPassword()
-            override fun getUsername() = user.getEmail()
-            override fun isAccountNonExpired() = user.isActive()
-            override fun isAccountNonLocked() = user.isActive()
-            override fun isCredentialsNonExpired() = user.isActive()
-            override fun isEnabled() = user.isActive()
+            override fun getAuthorities() = toGrantedAuthorities(user.roles)
+            override fun getPassword() = user.password
+            override fun getUsername() = user.email
+            override fun isAccountNonExpired() = user.isActive
+            override fun isAccountNonLocked() = user.isActive
+            override fun isCredentialsNonExpired() = user.isActive
+            override fun isEnabled() = user.isActive
         }
     }
 
