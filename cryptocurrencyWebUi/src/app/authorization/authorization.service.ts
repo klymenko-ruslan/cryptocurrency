@@ -12,11 +12,11 @@ import {HttpUtil} from '../shared/util/http.util';
 export class AuthorizationService {
   constructor(private http: Http, private router: Router, private fb: FacebookService) { }
 
-  login(email: string, password: string): Observable<string> {
+  login(email: string, password: string): Observable<any> {
     const body = JSON.stringify({ email: email, password: password });
     const headers = {headers: HttpUtil.getHeaders()};
     return this.http.post('http://localhost:8081/auth', body, headers)
-      .map(response => response.json().token)
+      .map(response => response.json())
       .catch(error => HttpUtil.handleError(error));
   }
 

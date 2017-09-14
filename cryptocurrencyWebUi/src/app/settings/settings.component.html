@@ -1,0 +1,36 @@
+<div style="text-align:center">
+  <form [formGroup]="settingsGroup" (ngSubmit)="updateSettings()">
+    <label *ngIf="message" style="color: red" translate>{{message}}</label>
+    <div>
+      <p>{{ 'SETTINGS.EMAIL'|translate }}:</p>
+      <input type="email" [(ngModel)]="user.email" id="email" formControlName="email"  class="form-control input" disabled />
+    </div>
+    <div>
+      <p>{{ 'SETTINGS.PASSWORD'|translate }}:</p>
+      <input [(ngModel)]="user.newPassword" type="password" id="newPassword" formControlName="newPassword"  class="form-control input" />
+    </div>
+    <div>
+      <p>{{ 'SETTINGS.FIRST_NAME'|translate }}:</p>
+      <input [(ngModel)]="user.firstName" id="firstName" formControlName="firstName"  class="form-control input" />
+    </div>
+    <div>
+      <p>{{ 'SETTINGS.LAST_NAME'|translate }}:</p>
+      <input [(ngModel)]="user.lastName" id="lastName" formControlName="lastName"  class="form-control input" />
+    </div>
+    <div>
+      <p>{{ 'SETTINGS.PROFESSION'|translate }}:</p>
+      <input [(ngModel)]="user.profession" id="profession" formControlName="profession"  class="form-control input" />
+    </div>
+    <div>
+      <p>{{ 'SETTINGS.CURRENCY'|translate }}:</p>
+      <select (change)="onChangeCurrency($event.target.value)" >
+        <option *ngFor="let currency of fiatCurrencies" [selected]="currency === user.fiatCurrency" >{{currency}}</option>
+      </select>
+    </div>
+    <div>
+      <p>{{ 'SETTINGS.OLD_PASSWORD'|translate }}:</p>
+      <input type="password" [(ngModel)]="user.password" id="password" formControlName="password"  class="form-control input" />
+    </div>
+    <button type="submit" class="btn btn-default" [disabled]="!settingsGroup.valid">{{ 'SETTINGS.SAVE'|translate }}</button>
+  </form>
+</div>

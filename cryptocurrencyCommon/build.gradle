@@ -12,7 +12,8 @@ repositories {
 
 
 dependencies {
-	compile group: 'com.hazelcast', name: 'hazelcast', version: '3.7'
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb:1.5.4.RELEASE")
+    compile group: 'com.hazelcast', name: 'hazelcast', version: '3.8.3'
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
     compile group: 'javax.mail', name: 'javax.mail-api', version: '1.5.6'
 }

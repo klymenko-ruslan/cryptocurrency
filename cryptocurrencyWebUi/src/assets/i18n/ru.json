@@ -1,9 +1,10 @@
 {
+  "COMMON" : {
+    "LOADING": "Загрузка"
+  },
   "MENU": {
     "USER_OPTIONS": "Настройки",
     "LOGOUT": "Выйти",
-    "NAVIGATION": "Навигация",
-    "DASHBOARDS": "Панели",
     "CHARTS": "Графики",
     "LOANS": "Кредиты",
     "PERIOD": {
@@ -29,6 +30,65 @@
     "LOGIN": "Вход",
     "LOGIN_FACEBOOK": "Вход через Facebook",
     "EMAIL": "Электронная почта",
-    "PASSWORD": "Пароль"
+    "PASSWORD": "Пароль",
+    "WRONG_CREDENTIALS": "Неправильный логин/пароль",
+    "REGISTER": "Зарегистрироваться"
+  },
+  "REGISTRATION": {
+    "TITLE": "Регистрация",
+    "EMAIL": "Электронная почта",
+    "PASSWORD": "Пароль",
+    "FIRST_NAME": "Имя",
+    "LAST_NAME": "Фамилия",
+    "PROFESSION": "Профессия",
+    "CURRENCY": "Валюта",
+    "REGISTER": "Зарегистрироваться",
+    "REDIRECT_TO_AUTHORIZE": "На страницу авторизации",
+    "USER_CREATED": "Пользователь успешно создан. Активируйте аккаунт через email",
+    "USER_CONFLICT": "Пользователь с такой электронной почтой уже существует"
+  },
+  "SETTINGS": {
+  "EMAIL": "Электронная почта",
+  "OLD_PASSWORD": "Старый пароль",
+  "PASSWORD": "Новый пароль",
+  "FIRST_NAME": "Имя",
+  "LAST_NAME": "Фамилия",
+  "PROFESSION": "Профессия",
+  "CURRENCY": "Валюта",
+  "SAVE": "Сохранить"
+},
+  "LOAN": {
+    "TYPE": "Выберите способ получения кредита",
+    "EMPTY": "",
+    "CREDITCARD": "Кредитная карта",
+    "MAIL_DELIVERY": "Почтовая доставка",
+    "CREDIT_CARD_NUMBER": "Номер кредитной карты",
+    "CASH": "Наличные",
+    "TITLE": "Узнать условия кредита",
+    "CURRENCY": "Валюта",
+    "SUM": "Сумма",
+    "COUNTRY": "Страна",
+    "CITY": "Город",
+    "OFFICE": "Офис",
+    "STREET": "Улица",
+    "BUILDING": "Дом",
+    "APPARTMENTS": "Квартира",
+    "POST_INDEX": "Почтовый индекс",
+    "PLEDGE_CURRENCY": "Залоговая валюта",
+    "DAYS": "Количество дней",
+    "CONDITIONS": "Узнать условия",
+    "LOAN_NUMBER": "Кредит №",
+    "FOR_USER_NUMBER": "для пользователя №",
+    "FOR_PERIOD": "на период",
+    "FOR_DAYS": "дней",
+    "FROM_DATE": "с",
+    "TO_DATE": "по",
+    "LOAN": "кредит",
+    "PLEDGE": "Залог",
+    "RETURN_SUM": "Сумма для погашения кредита",
+    "APPROVE": "Согласиться",
+    "CANCEL": "Отменить",
+    "KEY_MESSAGE": "Кредит оформлен. Отправьте залоговую сумму на указанный адрес",
+    "DELIVERY": "Вы сможете получить деньги по указанному адресу сразу после верификации транзакции"
   }
 }

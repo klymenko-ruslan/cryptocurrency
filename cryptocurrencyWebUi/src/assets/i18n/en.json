@@ -1,9 +1,10 @@
 {
+  "COMMON" : {
+    "LOADING": "Loading"
+  },
   "MENU": {
     "USER_OPTIONS": "Settings",
     "LOGOUT": "Logout",
-    "NAVIGATION": "Navigation",
-    "DASHBOARDS": "Dashboards",
     "CHARTS": "Charts",
     "LOANS": "Loans",
     "PERIOD": {
@@ -29,6 +30,65 @@
     "LOGIN": "Login",
     "LOGIN_FACEBOOK": "Login using Facebook",
     "EMAIL": "Email",
-    "PASSWORD": "Password"
+    "PASSWORD": "Password",
+    "WRONG_CREDENTIALS": "Wrong credentials",
+    "REGISTER": "Register"
+  },
+  "REGISTRATION": {
+    "TITLE": "Registration",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name",
+    "PROFESSION": "Profession",
+    "CURRENCY": "Currency",
+    "REGISTER": "Register",
+    "REDIRECT_TO_AUTHORIZE": "Go to authrization",
+    "USER_CREATED": "User succesfully created. Please confirm your account from the email",
+    "USER_CONFLICT": "User with such email already exists"
+  },
+  "SETTINGS": {
+    "EMAIL": "Email",
+    "OLD_PASSWORD": "Old password",
+    "PASSWORD": "New password",
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name",
+    "PROFESSION": "Profession",
+    "CURRENCY": "Currency",
+    "SAVE": "Save"
+  },
+  "LOAN": {
+    "TYPE": "Select loan type",
+    "EMPTY": "",
+    "CREDITCARD": "Choose credit receivement type",
+    "MAIL_DELIVERY": "Mail delivery",
+    "CREDIT_CARD_NUMBER": "Credit card number",
+    "CASH": "Cash",
+    "TITLE": "Get loan conditions",
+    "CURRENCY": "Currency",
+    "SUM": "Sum",
+    "COUNTRY": "Country",
+    "CITY": "City",
+    "OFFICE": "Office",
+    "STREET": "Street",
+    "BUILDING": "Building",
+    "APPARTMENTS": "Appartments",
+    "POST_INDEX": "Post index",
+    "PLEDGE_CURRENCY": "Pledge currency",
+    "DAYS": "Days",
+    "CONDITIONS": "Get conditions",
+    "LOAN_NUMBER": "Loan №",
+    "FOR_USER_NUMBER": "for user №",
+    "FOR_PERIOD": "for period",
+    "FOR_DAYS": "days",
+    "FROM_DATE": "from",
+    "TO_DATE": "to",
+    "LOAN": "loan",
+    "PLEDGE": "Pledge",
+    "RETURN_SUM": "Return sum",
+    "APPROVE": "Approve",
+    "CANCEL": "Cancel",
+    "KEY_MESSAGE": "Credit formalized. Send pledge sum to given address. You'll be notified when we receive costs",
+    "DELIVERY": "You can get your money on given address right after transaction verification"
   }
 }

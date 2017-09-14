@@ -45,7 +45,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    compile group: 'com.hazelcast', name: 'hazelcast', version: '3.7'
+    compile group: 'com.hazelcast', name: 'hazelcast', version: '3.8.3'
     compile ('org.springframework.social:spring-social-facebook:2.0.3.RELEASE')
     //compile("org.ethereum:ethereumj-core:1.1.0-RELEASE")
     compile("org.bitcoinj:bitcoinj-core:0.14.4")

@@ -35,6 +35,11 @@ export class AppComponent {
     return false;
   }
 
+  settings() {
+    this.router.navigate(['settings']);
+    return false;
+  }
+
   openPage(event) {
     const id = event.target.parentElement.id;
     const pageLinks = event.target.parentElement.parentElement.children;

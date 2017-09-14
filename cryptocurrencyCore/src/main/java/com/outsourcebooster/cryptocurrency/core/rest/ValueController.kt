@@ -1,7 +1,7 @@
 package com.outsourcebooster.cryptocurrency.core.rest;
 
-import com.outsourcebooster.cryptocurrency.core.model.Currency;
-import com.outsourcebooster.cryptocurrency.core.model.Value;
+import com.outsourcebooster.cryptocurrency.common.model.Currency
+import com.outsourcebooster.cryptocurrency.common.model.Value
 import com.outsourcebooster.cryptocurrency.core.repository.ValueRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

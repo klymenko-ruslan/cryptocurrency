@@ -1,24 +1,25 @@
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
-</head>
-
 <div style="text-align:center">
   <h1>
     {{ 'AUTHORIZATION.AUTHORIZATION'|translate }}
   </h1>
-  <div>
-    <p>{{ 'AUTHORIZATION.EMAIL'|translate }}:</p>
-    <input class="form-control" [value]="email" id="email" name="email" class="form-control input" >
-  </div>
-  <div>
-    <p>{{ 'AUTHORIZATION.PASSWORD'|translate }}:</p>
-    <input class="form-control" [value]="password" id="password" name="password"  class="form-control input">
-  </div>
-  <button title="Authorize" type="button" class="btn btn-default" (click)="login()" class="btn btn-default" >
-    {{ 'AUTHORIZATION.LOGIN'|translate }}
-  </button>
-  <button title="Authorize" type="button" class="btn btn-default" (click)="loginWithFacebook()" class="btn btn-default">{{ 'AUTHORIZATION.LOGIN_FACEBOOK'|translate }}</button>
+  <label *ngIf="errorMessage" style="color: red" translate>AUTHORIZATION.WRONG_CREDENTIALS</label>
+  <form [formGroup]="authorizationGroup" (ngSubmit)="login()">
+    <div class="form-group">
+      <input type="email" [(ngModel)]="email" class="form-control" formControlName="email">
+    </div>
+    <div class="form-group">
+      <input type="password" [(ngModel)]="password" class="form-control" formControlName="password">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-default" [disabled]="!authorizationGroup.valid">{{ 'AUTHORIZATION.LOGIN'|translate }}</button>
+      <button type="button" class="btn btn-default" (click)="loginWithFacebook()" class="btn btn-default">{{ 'AUTHORIZATION.LOGIN_FACEBOOK'|translate }}</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-default" (click)="redirectToRegistration()" class="btn btn-default">{{ 'AUTHORIZATION.REGISTER'|translate }}</button>
+    </div>
+  </form>
 
-  <button title="Authorize" type="button" class="btn btn-default" (click)="share()" class="btn btn-default">Share</button>
 </div>
+
+
 

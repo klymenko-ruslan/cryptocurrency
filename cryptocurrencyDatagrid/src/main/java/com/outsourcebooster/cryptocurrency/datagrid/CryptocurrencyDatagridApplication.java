@@ -1,17 +1,18 @@
 package com.outsourcebooster.cryptocurrency.datagrid;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
+import com.hazelcast.core.Hazelcast;
 import com.outsourcebooster.cryptocurrency.common.util.ApplicationUtils;
 
 public class CryptocurrencyDatagridApplication {
 
 	public static void main(String[] args) throws IOException {
-        ApplicationUtils.getCommonPropertiesMap().putAll(getProperties());
+        Hazelcast.shutdownAll();
+        Hazelcast.newHazelcastInstance(ApplicationUtils.cfg);
+	    ApplicationUtils.getCommonPropertiesMap().putAll(getProperties());
     }
     private static Map<String, String> getProperties() {
         return new HashMap<String, String>() {

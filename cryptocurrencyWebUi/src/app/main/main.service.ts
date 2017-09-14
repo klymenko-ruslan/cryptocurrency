@@ -19,15 +19,14 @@ export class MainService {
   getValues(period): Observable<Value[]> {
     const headers = {headers: HttpUtil.getHeaders()};
     return this.http.get('http://localhost:8083/value/' + period)
-      .map(response => response.json())
-      .map(response => this.toValues(response))
+      .map(response => this.toValues(response.json()))
       .catch(error => HttpUtil.handleError(error));
   }
   private toValues(response: any): Value[] {
     const values: Value[] = [];
     response.forEach((item, index) => {
       const value = new Value();
-      CurrencyUtil.getSupportedCurrencies().forEach((currency) => {
+      CurrencyUtil.getSupportedCryptoCurrencies().forEach((currency) => {
         value[currency] = item[currency];
       })
       value.date = item.date;

@@ -1,0 +1,132 @@
+<div style="text-align:center">
+  <h1>
+    {{ 'LOAN.TITLE'|translate }}
+  </h1>
+  <div>
+    <form [formGroup]="loanGroup" (ngSubmit)="getLoanConditions()">
+      <div>
+        <p>{{ 'LOAN.PLEDGE_CURRENCY'|translate }}:</p>
+        <select class="form-control" (change)="onCryptoCurrencyChange($event.target.value)" [disabled]="loan.id">
+          <option *ngFor="let cryptoCurrency of cryptoCurrencies" [value]="cryptoCurrency" >{{cryptoCurrency}}</option>
+        </select>
+      </div>
+      <div>
+        <p>{{ 'LOAN.CURRENCY'|translate }}:</p>
+        <select class="form-control" (change)="onFiatCurrencyChange($event.target.value)" [disabled]="loan.id" >
+          <option *ngFor="let fiatCurrency of fiatCurrencies" [value]="fiatCurrency" >{{fiatCurrency}}</option>
+        </select>
+      </div>
+      <div>
+        <p>{{ 'LOAN.SUM'|translate }}:</p>
+        <input [(ngModel)]="sum" id="sum" formControlName="sum"  [disabled]="loan.id" class="form-control input" />
+      </div>
+      <div>
+        <p>{{ 'LOAN.DAYS'|translate }}:</p>
+        <input [(ngModel)]="days" id="days" formControlName="days" disabled="{{loan.userId}}" class="form-control input" />
+      </div>
+      <div>
+        <p>{{ 'LOAN.TYPE'|translate }}:</p>
+        <select class="form-control" (change)="onLoanTypeChange($event.target.value)" [disabled]="loanType">
+          <option *ngFor="let loanType of loanTypes" [value]="loanType" >{{ 'LOAN.'+loanType|translate }}</option>
+        </select>
+      </div>
+      <div [hidden]="!loanType">
+        <div id="loanTypeCash" [hidden]="loanType != 'CASH'">
+          <div>
+            <p>{{ 'LOAN.COUNTRY'|translate }}:</p>
+            <select class="form-control" (change)="onCountryChange($event.target.value)" [disabled]="loan.id">
+              <option *ngFor="let country of countries" [value]="country" >{{country}}</option>
+            </select>
+          </div>
+          <div>
+            <p>{{ 'LOAN.CITY'|translate }}:</p>
+            <select class="form-control" (change)="onCityChange($event.target.value)" [disabled]="loan.id">
+              <option *ngFor="let city of cities" [value]="city" >{{city}}</option>
+            </select>
+          </div>
+          <div>
+            <p>{{ 'LOAN.OFFICE'|translate }}:</p>
+            <select class="form-control" (change)="onOfficeChange($event.target.value)" [disabled]="loan.id">
+              <option *ngFor="let office of offices" [value]="office.id" >{{ 'LOAN.STREET'|translate }}: {{office.address.street}}, {{ 'LOAN.BUILDING'|translate }}: {{office.address.building}}, {{ 'LOAN.APPARTMENTS'|translate }}: {{office.address.appartaments}}</option>
+            </select>
+          </div>
+        </div>
+        <div id="loanTypeCreditCard" [hidden]="loanType != 'CREDITCARD'">
+          <p>{{ 'LOAN.CREDIT_CARD_NUMBER'|translate }}:</p>
+          <input [(ngModel)]="creditCardNumber" id="creditCardNumber" formControlName="creditCardNumber"  [disabled]="loan.id" class="form-control input" />
+        </div>
+
+
+        <div id="loanTypeMailDelivery" [hidden]="loanType != 'MAIL_DELIVERY'">
+          <div>
+            <p>{{ 'LOAN.COUNTRY'|translate }}:</p>
+            <input [(ngModel)]="country" id="country" formControlName="country"  [disabled]="loan.id" class="form-control input" />
+          </div>
+          <div>
+            <p>{{ 'LOAN.CITY'|translate }}:</p>
+            <input [(ngModel)]="city" id="city" formControlName="city"  [disabled]="loan.id" class="form-control input" />
+          </div>
+          <div>
+            <p>{{ 'LOAN.STREET'|translate }}:</p>
+            <input [(ngModel)]="street" id="street" formControlName="street"  [disabled]="loan.id" class="form-control input" />
+          </div>
+          <div>
+            <p>{{ 'LOAN.BUILDING'|translate }}:</p>
+            <input [(ngModel)]="building" id="building" formControlName="building"  [disabled]="loan.id" class="form-control input" />
+          </div>
+          <div>
+            <p>{{ 'LOAN.APPARTMENTS'|translate }}:</p>
+            <input [(ngModel)]="appartments" id="appartments" formControlName="appartments"  [disabled]="loan.id" class="form-control input" />
+          </div>
+          <div>
+            <p>{{ 'LOAN.POST_INDEX'|translate }}:</p>
+            <input [(ngModel)]="postIndex" id="postIndex" formControlName="postIndex"  [disabled]="loan.id" class="form-control input" />
+          </div>
+        </div>
+
+
+
+
+        <div *ngIf="!loan.id">
+          <button type="submit" class="btn btn-default" [disabled]="!loanGroup.valid">{{ 'LOAN.CONDITIONS'|translate }}</button>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="loadingConditions"> {{ 'COMMON.LOADING'|translate }} </div>
+    <div *ngIf="loan.id">
+      <div>
+        <p>{{ 'LOAN.LOAN_NUMBER'|translate }}:</p>
+        <input [(ngModel)]="loan.id" id="loanId" disabled class="form-control input" />
+      </div>
+      <div>
+        <p>{{ 'LOAN.FOR_USER_NUMBER'|translate }}:</p>
+        <input [(ngModel)]="loan.userId" id="userId" disabled class="form-control input" />
+      </div>
+      <div>
+        <p>{{ 'LOAN.FOR_PERIOD'|translate }}:</p>
+        <input [(ngModel)]="loan.dateCreated + ' - ' + loan.dateDue" id="periodInDays" disabled class="form-control input" />
+      </div>
+      <div>
+        <p>{{ 'LOAN.PLEDGE'|translate }}:</p>
+        <input [(ngModel)]="loan.pledgeSum + ' ' + loan.pledgeCurrency" id="pledgeSum" disabled class="form-control input" />
+      </div>
+      <div>
+        <p>{{ 'LOAN.RETURN_SUM'|translate }}:</p>
+        <input [(ngModel)]="loan.returnSum" id="returnSum" disabled class="form-control input" />
+      </div>
+      <div *ngIf="!loan.pledgeKey">
+        <button class="btn btn-default" (click)="approve()">{{ 'LOAN.APPROVE'|translate }}</button>
+        <button class="btn btn-default" (click)="disapprove()">{{'LOAN.CANCEL'|translate}}</button>
+      </div>
+      <div *ngIf="loadingWalletKey"> {{ 'COMMON.LOADING'|translate }} </div>
+      <div *ngIf="loan.pledgeKey">
+        <div>
+          <br /><br />
+          <p>{{'LOAN.KEY_MESSAGE'|translate}}:</p>
+          <input [(ngModel)]="loan.pledgeKey" id="pledgeKey" disabled class="form-control input" />
+          <p style="color:red">{{'LOAN.DELIVERY'|translate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

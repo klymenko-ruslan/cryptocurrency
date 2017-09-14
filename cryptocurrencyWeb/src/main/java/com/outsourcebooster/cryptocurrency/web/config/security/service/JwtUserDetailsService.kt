@@ -1,6 +1,6 @@
 package com.outsourcebooster.cryptocurrency.web.config.security.service;
 
-import com.outsourcebooster.cryptocurrency.web.repository.UserRepository;
+import com.outsourcebooster.cryptocurrency.web.repository.user.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -30,7 +30,7 @@ export class MainComponent {
   }
 
   getListOfCurrencies() {
-    this.currencies = CurrencyUtil.getSupportedCurrencies();
+    this.currencies = CurrencyUtil.getSupportedCryptoCurrencies();
     this.selectedCurrency = this.currencies[0];
   }
 

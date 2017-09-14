@@ -4,6 +4,7 @@ package com.outsourcebooster.cryptocurrency.web.config.security.controller;
 import com.outsourcebooster.cryptocurrency.web.config.security.model.JwtAuthenticationRequest;
 import com.outsourcebooster.cryptocurrency.web.config.security.util.JwtTokenUtil;
 import com.outsourcebooster.cryptocurrency.web.config.security.model.JwtAuthenticationResponse;
+import com.outsourcebooster.cryptocurrency.web.service.user.UserService
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 open class AuthenticationRestController(private val authenticationManager: AuthenticationManager,
                                         private val jwtTokenUtil: JwtTokenUtil,
-                                        private val userDetailsService: UserDetailsService) {
+                                        private val userDetailsService: UserDetailsService,
+                                        private val userService: UserService) {
 
 
     @RequestMapping(value = "auth", method = arrayOf(RequestMethod.POST))
@@ -25,13 +27,13 @@ open class AuthenticationRestController(private val authenticationManager: Authe
         val usernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken(
                 authenticationRequest.email,
                 authenticationRequest.password
-        );
-        val authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        val userDetails = userDetailsService.loadUserByUsername(authenticationRequest.email);
-        val token = jwtTokenUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(JwtAuthenticationResponse(token));
+        )
+        val authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken)
+        SecurityContextHolder.getContext().setAuthentication(authentication)
+        val userDetails = userDetailsService.loadUserByUsername(authenticationRequest.email)
+        val token = jwtTokenUtil.generateToken(userDetails)
+        val user = userService.getUserByEmail(authenticationRequest.email)
+        user!!.password = ""
+        return ResponseEntity.ok(JwtAuthenticationResponse(token, user))
     }
 }

@@ -36,7 +36,7 @@ $(document).ready(function() {
             async: false,
             success: function (data) {
                 var mainTable = '<table  border="1" class="graph__info">';
-                mainTable += '<tr class="graph__info_name"><td>Currency</td><td>Price</td></tr>';
+                mainTable += '<tr class="graph__info_name"><td>CryptoCurrency</td><td>Price</td></tr>';
                 for(currency in data) {
                     if(currency != 'id' && data[currency].price != null) {
                         mainTable += '<tr class="graph__info_name"><td>' + currency + '</td><td>' + data[currency].price[userCurrency] + ' ' + userCurrency +'</td></tr>';
@@ -59,7 +59,7 @@ $(document).ready(function() {
             async: false,
             success: function (currencies) {
                 currencies.forEach(function (currency) {
-                    $("#currency").append("<option name='"+currency+"'>"+currency+"</option>");
+                    $("#cryptoCurrency").append("<option name='"+currency+"'>"+currency+"</option>");
                 });
             }
         });
@@ -224,15 +224,15 @@ $(document).ready(function() {
 
     $.when(loadChartData("day")).then(function() {
 
-        setUpChart(chartData,$("#currency").val());
+        setUpChart(chartData,$("#cryptoCurrency").val());
         loadUserData();
 
         setInterval(function(){
-            updateChart(chartData, $("#currency").val());
+            updateChart(chartData, $("#cryptoCurrency").val());
             loadUserData();
         }, 1000);
 
-        $("#currency").on("change", function() {
+        $("#cryptoCurrency").on("change", function() {
             updateChart(chartData,$(this).val());
         });
 
@@ -300,15 +300,15 @@ $(document).ready(function() {
                 lastName: $("#lastName").val(),
                 profession: $("#profession").val(),
                 email: $("#email").val(),
-                userCurrency: $("#userCurrency").val(),
+                userCurrency: $("#fiatCurrency").val(),
                 enableNotification: $("#enableNotification").prop('checked')}),
             success: function (data) {
                 toggleEnableNotificationRulesButton();
                 $("#firstNamePlaceholder").text($("#firstName").val());
                 $("#lastNamePlaceholder").text($("#lastName").val());
                 $("#professionPlaceholder").text($("#profession").val());
-                userCurrency = $("#userCurrency").val();
-                $(".userCurrency").text(userCurrency);
+                userCurrency = $("#fiatCurrency").val();
+                $(".fiatCurrency").text(userCurrency);
                 //data.entity.enableNotification
                 alert("User was successfully updated.");
                 $("#profile").dialog("close");

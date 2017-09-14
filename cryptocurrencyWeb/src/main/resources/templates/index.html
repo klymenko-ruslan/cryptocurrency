@@ -224,12 +224,12 @@
       <tr>
         <td>btc</td>
         <td><input id="btcNotificationRule" /></td>
-        <td><span th:text="${user.userCurrency} " class="userCurrency" /></td>
+        <td><span th:text="${user.fiatCurrency} " class="userCurrency" /></td>
       </tr>
       <tr>
         <td>eth</td>
         <td><input id="ethNotificationRule" /></td>
-        <td><span th:text="${user.userCurrency} " class="userCurrency" /></td>
+        <td><span th:text="${user.fiatCurrency} " class="userCurrency" /></td>
       </tr>
     </table>
     <button id="notificationRulesSaveButton">Save</button>
@@ -245,8 +245,8 @@
 <script type="text/javascript" th:inline="javascript" >
   var username = [[${user.username}]];
 
-  var userCurrency = [[${user.userCurrency}]].$name;
-  $("#userCurrency").val(userCurrency);
+  var fiatCurrency = [[${user.fiatCurrency}]].$name;
+  $("#fiatCurrency").val(userCurrency);
 
   $("#enableNotification").prop('checked', [[${user.enableNotification}]]);
   var notificationRules = [[${user.notificationRules}]];

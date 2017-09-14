@@ -17,6 +17,13 @@ export class HttpUtil {
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
     headers.append('X-Requested-With', 'XMLHttpRequest');
+    if(localStorage.getItem("token") != null) {
+      headers.append('Authorization', localStorage.getItem("token"));
+    }
     return headers;
+  }
+
+  public static getUserJson() {
+    return JSON.parse(localStorage.getItem('user'));
   }
 }

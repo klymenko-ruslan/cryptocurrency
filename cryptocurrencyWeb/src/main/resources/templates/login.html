@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script>
         $(document).ready(function() {
-            function createUser() {
+            function create() {
                 $.ajax({
                     type: 'POST',
                     url: 'http://localhost:8081/user/create',
@@ -30,7 +30,7 @@
                     $( "#createUserForm" ).dialog();
                 });
             });
-            $("#createUser").on("click", function() {
+            $("#create").on("click", function() {
                 createUser();
             });
             $(function() {

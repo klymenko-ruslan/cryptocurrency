@@ -20,20 +20,30 @@ import javax.mail.internet.MimeMessage;
  */
 public class ApplicationUtils {
 
+    private static String hazelcastInstanceName = "instance";
+    private static String commonPropertiesMap = "commonProperties";
+
+    public static Config cfg;
+    static {
+        cfg = new Config();
+        cfg.getNetworkConfig().setPort(5701);
+        cfg.getNetworkConfig().setPortCount(20);
+        cfg.getNetworkConfig().setPortAutoIncrement(true);
+        cfg.setInstanceName(hazelcastInstanceName);
+    }
+
+
     public static String getCommonProperty(String propertyName) {
-        Config cfg = new Config();
-        HazelcastInstance instance = Hazelcast.newHazelcastInstance(cfg);
-        Map<String, Object> commonPropertiesMap = instance.getMap("commonProperties");
-        return (String)commonPropertiesMap.get(propertyName);
+        HazelcastInstance instance = Hazelcast.getOrCreateHazelcastInstance(cfg);
+        Map<String, String> commonPropertiesMap = instance.getMap(ApplicationUtils.commonPropertiesMap);
+        return commonPropertiesMap.get(propertyName);
     }
 
     public static Map<String, Object> getCommonPropertiesMap() {
-        Config cfg = new Config();
-        HazelcastInstance instance = Hazelcast.newHazelcastInstance(cfg);
-        return instance.getMap("commonProperties");
+        return Hazelcast.getOrCreateHazelcastInstance(cfg).getMap(commonPropertiesMap);
     }
 
-    private final static String username = "cryptocurrencyapp@gmail.com";
+    private final static String email = "cryptocurrencyapp@gmail.com";
     private final static  String password = "Crypto123654~";
     private final static Properties props = new Properties(){{
         put("mail.smtp.auth", "true");
@@ -42,17 +52,19 @@ public class ApplicationUtils {
         put("mail.smtp.port", "587");
     }};
 
-    private final static Session session = Session.getInstance(props,
-            new javax.mail.Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password);
-                }
-            });
 
+    private static Session getSession() {
+        return Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(email, password);
+                    }
+                });
+    }
     public static void sendEmail(String subject, String text, String reciever) {
         try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
+            Message message = new MimeMessage(getSession());
+            message.setFrom(new InternetAddress(email));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(reciever));
             message.setSubject(subject);

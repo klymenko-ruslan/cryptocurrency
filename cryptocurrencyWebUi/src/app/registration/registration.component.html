@@ -1,0 +1,20 @@
+<div style="text-align:center">
+  <h1>
+    {{ 'REGISTRATION.TITLE'|translate }}
+  </h1>
+  <form [formGroup]="registerGroup" (ngSubmit)="register()">
+    <label *ngIf="message" style="color: red" translate>{{message}}</label>
+    <div>
+      <p>{{ 'REGISTRATION.EMAIL'|translate }}:</p>
+      <input type="email" [(ngModel)]="user.email" id="email" formControlName="email"  class="form-control input" />
+    </div>
+    <div>
+      <p>{{ 'REGISTRATION.PASSWORD'|translate }}:</p>
+      <input type="password" [(ngModel)]="user.password" id="password" formControlName="password"  class="form-control input" />
+    </div>
+    <button type="submit" class="btn btn-default" [disabled]="!registerGroup.valid">{{ 'REGISTRATION.REGISTER'|translate }}</button>
+  </form>
+</div>
+<div style="text-align:center">
+  <button type="button" class="btn btn-default" (click)="redirectToAuthorize()">{{ 'REGISTRATION.REDIRECT_TO_AUTHORIZE'|translate }}</button>
+</div>

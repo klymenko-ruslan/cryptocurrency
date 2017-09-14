@@ -20,7 +20,7 @@
               </a>
             </li>
             <li class="dropdown user user-menu">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" (click)="settings()">
                 <span class="hidden-xs">{{ 'MENU.USER_OPTIONS'|translate }}</span>
               </a>
             </li>
@@ -43,14 +43,7 @@
         <section class="sidebar">
 
           <ul class="sidebar-menu">
-            <li class="header">{{'MENU.NAVIGATION'|translate}}</li>
             <li class="active treeview">
-              <a href="#">
-                <i class="fa fa-dashboard"></i> <span>{{'MENU.DASHBOARDS'|translate}}</span>
-                <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-              </a>
               <ul class="treeview-menu">
                 <li class="windows active" id="linkCharts">
                   <a href="#" (click)="openPage($event)">
